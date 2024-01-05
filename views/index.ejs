@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Fractal Equities</title>
+    <%- include('partials/headlinks') %>
+</head>
+<body data-bs-theme="dark">
+    <%- include('partials/navbar') %>
+    <main class="mt-5 pt-2">
+        
+    
+        <div class="hero d-flex flex-column">
+                <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container" >
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+            {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500"
+            },
+            {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "US 100"
+            },
+            {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR to USD"
+            },
+            {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "Bitcoin"
+            },
+            {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "Ethereum"
+            },
+            {
+                "description": "",
+                "proName": "BINANCE:SOLUSDT"
+            },
+            {
+                "description": "",
+                "proName": "BINANCE:XRPUSDT"
+            },
+            {
+                "description": "",
+                "proName": "CRYPTOCAP:USDT.D"
+            },
+            {
+                "description": "",
+                "proName": "NASDAQ:AAPL"
+            },
+            {
+                "description": "",
+                "proName": "NASDAQ:TSLA"
+            }
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": false,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "en"
+        }
+            </script>
+            </div>
+        <!-- TradingView Widget END -->
+            <div class="hero-sub my-auto">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner ">
+                      <div class="carousel-item active text-center">
+                        <p class="display-5 font-lato mx-auto  slide-text mb-4">
+                            <span style="color: rgb(212, 175, 55);">INVEST</span> WITH <span style="color: rgb(212, 175, 55);">CONFIDENCE</span> AND <span style="color: rgb(212, 175, 55);">GROW</span> YOUR <span style="color: rgb(212, 175, 55);">WEALTH</span>
+                        </p>
+                        <a href="/signup" class="btn btn1 fw-semibold font-poppins">GET STARTED</a>
+                      </div>
+                      <div class="carousel-item text-center">
+                        <p class="display-5 font-lato mx-auto text-center slide-text mb-4">
+                            <span style="color: rgb(212, 175, 55);">FINANCIAL</span> ENDEAVORS IN THE <span style="color: rgb(212, 175, 55);">CONTEMPORARY</span> WORLD
+                        </p>
+                        <a href="/signup" class="btn btn1 fw-semibold font-poppins">CREATE ACCOUNT</a>
+                      </div>
+                      <div class="carousel-item text-center">
+                        <p class="display-5 font-lato mx-auto text-center slide-text mb-4">
+                            YOUR <span style="color: rgb(212, 175, 55);">PATH</span> TO SMART <span style="color: rgb(212, 175, 55);">INVESTMENT</span> AND <span style="color: rgb(212, 175, 55);">TRADING</span> STARTS TODAY
+                        </p>
+                        <a href="/signup" class="btn btn1 fw-semibold font-poppins">OPEN TRADING ACCOUNT</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="py-5 my-3 px-md-5 px-3 text-center">
+            <div class="px-md-5">
+                <p class="fw-bold font-poppins fs-5">JOIN FORCES WITH A LEADING GLOBAL BROKER AND START GETTING MORE FROM THE MARKETS.</p>
+                <p>
+                    Welcome to <span class="fw-bold color1">Fractal Equities</span>, where cutting-edge technology meets financial prowess to redefine the landscape of digital currency trading. Our platform operates at the forefront of innovation, utilizing advanced AI bots, high-tech tools, and a sophisticated trading infrastructure to unlock unparalleled opportunities in the dynamic world of finance. <br> <br>
+                    At <span class="fw-bold color1">Fractal Equities</span>, we pride ourselves on being a beacon of change in the crypto-trading sphere, breaking down barriers and creating a community accessible to all. Our team of seasoned professionals and expert traders, armed with their in-depth market knowledge, carefully monitor and optimize trading strategies to ensure a high-profit margin for our investors. <br> <br>
+                    With friendly Customer Support, the latest technology and a range of account types, we've got everything you need to discover better trading and investments.
+                </p>
+            </div>
+        </div>
+
+        <div class="py-5 my-3 px-3 px-md-5 hero2 text-center">
+            <h1 class="fw-bold pt-5">WHY <span class="color1">CHOOSE</span> US?</h1>
+            <p>EMBARK ON THE FINANCE REVOLUTION WITH US - TRUSTWORTHY, SECURE, AND PIONEERING</p>
+
+            <div class="container-fluid mt-5 py-5 px-5">
+                <div class="row text-center g-5">
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/personal-data.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">FORMIDABLE SECURITY</p>
+                        <p class="color2 fs-5">
+                            Defense against DDoS Onslaughts, <br> Advanced Data Encryption
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/connect.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">WORLDWIDE PRESENCE</p>
+                        <p class="color2 fs-5">
+                            Extending our services to encompass 99% <br> of countries spanning the entire globe.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/payment-method.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">TRANSACTIONAL MODALITIES</p>
+                        <p class="color2 fs-5">
+                            Prominent Modalities: Visa, MasterCard, <br> bank transfer, cryptocurrency
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/analytics.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">MARKET INSTRUMENTS</p>
+                        <p class="color2 fs-5">
+                            Platform that brings investing <br> power to your fingertips
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/expenses.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">EXPENSE OPTIMIZATION</p>
+                        <p class="color2 fs-5">
+                            Competitive Fee Structures for Takers <br> and Market Makers Alike
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 pb-5">
+                        <img src="/assets/img/money-management.png" alt="" class="img-fluid choose-icon">
+                        <p class="fw-bold fs-4 mt-3">AMPLE LIQUIDITY</p>
+                        <p class="color2 fs-5">
+                            Rapid Entry to Robustly Liquid Orderbook <br>for Leading Currency Pairs
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-5 pt-4 px-2">
+            <div class="hero3 mx-auto">
+                <p class="font-poppins fw-bold fs-4 text-center">
+                    Choose your account type and build your portfolio today!
+                </p>
+                <div class="py-3">
+                    <div class="py-2">
+                        <span class="numbering align-middle">
+                            <img src="/assets/img/number-1.png" alt="">
+                        </span>
+                        <span class="ps-3 align-middle">
+                            Complete the registration form
+                        </span>
+                    </div>
+                    <div class="py-2">
+                        <span class="numbering align-middle">
+                            <img src="/assets/img/number-2.png" alt="">
+                        </span>
+                        <span class=" ps-3 align-middle">
+                            Choose the right plan to suit your trading needs
+                        </span>
+                    </div>
+                    <div class="py-2">
+                        <span class="numbering align-middle">
+                            <img src="/assets/img/number-3.png" alt="">
+                        </span>
+                        <span class=" ps-3 align-middle">
+                            Verify your new profile
+                        </span>
+                    </div>
+                    <div class="py-2">
+                        <span class="numbering align-middle">
+                            <img src="/assets/img/number-4.png" alt="">
+                        </span>
+                        <span class="ps-3 align-middle">
+                            Fund your account, invest and start trading
+                        </span>
+                    </div>
+                    <div class="py-2">
+                        <span class="numbering align-middle">
+                            <img src="/assets/img/number-5.png" alt="">
+                        </span>
+                        <span class="ps-3 align-middle">
+                            Withdraw Profits!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="text-center pt-3 pb-4 mb-5">
+                    <a href="/signup" class="btn btn2 fw-semibold">REGISTER NOW</a>
+                </div>
+
+                <hr style="border: 2px solid white;">
+            </div>
+        </div>
+        <div class="my-5 py-3 px-5">
+            <h1 class="fw-bold font-lato text-center" >Choose your Trading Plan</h1>
+            <div class="container-fluid py-5 px-md-5 px-2">
+                <div class="row g-5">
+                    <div class="col-12 col-md-6 p-0">
+                        <div class="account px-5 py-4 mx-auto">
+                            <p class="fw-bold font-poppins fs-4 my-2">Basic Plan</p>
+                            <a href="/signup" class="btn btn2 fs-6 px-2 py-1">Get Started</a>
+                            <hr style="border: 1px solid white;">
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    Up to 1:500 Leverage
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    20% Weekly Estimated Returns
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    2.5% Referal Bonus
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    <span class="fw-bold">$200</span> Minimum Deposit
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 p-0">
+                        <div class="px-5 py-4 account mx-auto">
+                            <p class="fw-bold font-poppins fs-4 my-2">Pro Plan</p>
+                            <a href="/signup" class="btn btn2 fs-6 px-2 py-1">Get Started</a>
+                            <hr style="border: 1px solid white;">
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    Up to 1:1000 Leverage
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    35% Weekly Estimated Returns
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    5% Referal Bonus
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    <span class="fw-bold">$1000</span> Minimum Deposit
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-12 col-md-6 p-0">
+                        <div class="account px-5 py-4 mx-auto">
+                            <p class="fw-bold font-poppins fs-4 my-2">Premuim Plan</p>
+                            <a href="/signup" class="btn btn2 fs-6 px-2 py-1">Get Started</a>
+                            <hr style="border: 1px solid white;">
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    Up to 1:1500 Leverage
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    50% Weekly Estimated Returns
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    5% Referal Bonus
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    <span class="fw-bold">$10,000</span> Minimum Deposit
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 p-0">
+                        <div class="account px-5 py-4 mx-auto">
+                            <p class="fw-bold font-poppins fs-4 my-2">Retirement Plan</p>
+                            <a href="/signup" class="btn btn2 fs-6 px-2 py-1">Get Started</a>
+                            <hr style="border: 1px solid white;">
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    Up to 1:2000 Leverage
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    65% Weekly Estimated Returns
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    10% Referal Bonus
+                                </span>
+                            </div>
+                            <div class="py-2">
+                                <span class="numbering">
+                                    <img src="/assets/img/checked.png" alt="">
+                                </span>
+                                <span class="ps-2">
+                                    <span class="fw-bold">$50,000</span> Minimum Deposit
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="hero4 py-5 px-5 text-center">
+            <h1 class="fw-bold font-poppins pt-5">Join Our <span class="color1">community</span> of Mordern <span class="color1">Investors</span></h1>
+            <h4 class="fw-semibold pt-3">Thousands of Investors across the world use our Platform and Investment Fund to grow their wealth</h4>
+
+            <div class="container-fluid py-5 px-5">
+                <div class="row pt-sm-5 g-5">
+                    <div class="col-12 col-md-4">
+                        <p class="color1 display-3 mb-0"><i class="ri-shield-user-line"></i></p>
+                        <p class="fw-bold fs-1 font-poppins mb-0">15,000+</p>
+                        <p class="fs-5">Active Users</p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <p class="color1 display-3 mb-0"><i class="ri-earth-line"></i></p>
+                        <p class="fw-bold fs-1 font-poppins mb-0">100+</p>
+                        <p class="fs-5">Countries Supported</p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <p class="color1 display-3 mb-0"><i class="ri-refund-2-fill"></i></p>
+                        <p class="fw-bold fs-1 font-poppins mb-0">$10M+</p>
+                        <p class="fs-5">Assets Under Management</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="my-5 py-5 px-sm-5">
+            <h1 class="fw-bold text-center">WE ARE <span class="color1">ACKNOWLEDGED</span> GLOBALLY</h1>
+            <div class="container-fluid pt-5 px-md-5">
+                <!-- Slider main container -->
+                <div class="swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/adyen.svg" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">9.5</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/western_union.svg" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">8.5</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/GoFundMe.svg" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">9.0</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/pointsbet.svg" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">8.7</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/trustly.svg" alt=""></p> <br>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">7.9</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/Barclays_(11).png" width="150px" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">8.8</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/Citi_logo_PNG_(10).png" width="150px" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">9.0</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/Coinbase_logo_PNG_(8).png" width="150px" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">9.4</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/cropped-Kraken_(4).png" width="150px" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">7.8</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="text-center rating py-3">
+                                <p><img src="/assets/img/cropped-MetaMask_logo_PNG_(1).png" width="150px" alt=""></p>
+                                <span class="px-5 fw-bold font-poppins rating fs-4">9.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero5 py-5 text-center px-3">
+            <h2 class="fw-bold font-poppins py-3">COMMENCE YOUR JOURNEY TODAY WITH <span class="color1">FRACTAL EQUITIES</span></h2>
+            <p class="font-lato fs-4 mb-4">Register for Free and Commence Investing!</p>
+            <a href="/signup" class="btn btn3 fs-4 px-3 py-2 fw-bold">REGISTER NOW </a>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+</body>
+<script>
+        const swiper = new Swiper('.swiper', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: {
+                delay: 3000,
+            },
+            // Default parameters
+            slidesPerView: 2,
+            spaceBetween: 10,
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is >= 480px
+                480: {
+                slidesPerView: 2,
+                spaceBetween: 30
+                },
+                // when window width is >= 640px
+                576: {
+                slidesPerView: 2,
+                spaceBetween: 20
+                },
+                768: {
+                slidesPerView: 3,
+                spaceBetween: 20
+                },
+                992: {
+                slidesPerView: 4,
+                spaceBetween: 20
+                },
+                1200: {
+                slidesPerView: 5,
+                spaceBetween: 40
+                }
+            }
+
+        });
+</script>
+</html>
