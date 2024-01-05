@@ -8,67 +8,9 @@
 </head>
 <body data-bs-theme="dark">
     <%- include('partials/navbar') %>
-    <main class="mt-5 pt-2">
-        
-    
+    <main class="mt-5 pt-2">    
         <div class="hero d-flex flex-column">
-                <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container" >
-            <div class="tradingview-widget-container__widget"></div>
-            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-            {
-            "symbols": [
-            {
-                "proName": "FOREXCOM:SPXUSD",
-                "title": "S&P 500"
-            },
-            {
-                "proName": "FOREXCOM:NSXUSD",
-                "title": "US 100"
-            },
-            {
-                "proName": "FX_IDC:EURUSD",
-                "title": "EUR to USD"
-            },
-            {
-                "proName": "BITSTAMP:BTCUSD",
-                "title": "Bitcoin"
-            },
-            {
-                "proName": "BITSTAMP:ETHUSD",
-                "title": "Ethereum"
-            },
-            {
-                "description": "",
-                "proName": "BINANCE:SOLUSDT"
-            },
-            {
-                "description": "",
-                "proName": "BINANCE:XRPUSDT"
-            },
-            {
-                "description": "",
-                "proName": "CRYPTOCAP:USDT.D"
-            },
-            {
-                "description": "",
-                "proName": "NASDAQ:AAPL"
-            },
-            {
-                "description": "",
-                "proName": "NASDAQ:TSLA"
-            }
-            ],
-            "showSymbolLogo": true,
-            "isTransparent": false,
-            "displayMode": "regular",
-            "colorTheme": "dark",
-            "locale": "en"
-        }
-            </script>
-            </div>
-        <!-- TradingView Widget END -->
+            <%- include('partials/tradingview') %>
             <div class="hero-sub my-auto">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner ">
@@ -160,7 +102,7 @@
         <div class="my-5 pt-4 px-2">
             <div class="hero3 mx-auto">
                 <p class="font-poppins fw-bold fs-4 text-center">
-                    Choose your account type and build your portfolio today!
+                    Choose your trading plan and build your portfolio today!
                 </p>
                 <div class="py-3">
                     <div class="py-2">

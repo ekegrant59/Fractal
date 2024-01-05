@@ -44,6 +44,18 @@ app.get('/', function(req,res){
     res.render('index')
 })
 
+app.get('/about', function(req,res){ 
+    res.render('about')
+})
+
+app.get('/plans', function(req,res){ 
+  res.render('plans')
+})
+
+app.get('/faq', function(req,res){ 
+  res.render('faq')
+})
+
 const port = process.env.PORT || 3000
 
 app.listen(port, ()=>{
