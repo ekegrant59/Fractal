@@ -56,6 +56,22 @@ app.get('/faq', function(req,res){
   res.render('faq')
 })
 
+app.get('/terms', function(req,res){ 
+  res.render('terms')
+})
+
+app.get('/privacy', function(req,res){ 
+  res.render('privacy')
+})
+
+app.get('/login', function(req,res){ 
+  res.render('login')
+})
+
+app.get('/signup', function(req,res){ 
+  res.render('signup')
+})
+
 const port = process.env.PORT || 3000
 
 app.listen(port, ()=>{
