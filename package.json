@@ -19,6 +19,8 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.5.2"
+    "mongoose": "^6.5.2",
+    "nodemailer": "^6.9.8",
+    "nodemailer-express-handlebars": "^6.1.0"
   }
 }
