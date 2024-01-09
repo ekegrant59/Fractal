@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const session = require('express-session')
-const adminschema = require('./schema/adminschema')
+// const adminschema = require('./schema/adminschema')
 const userschema = require('./schema/userschema')
 const balanceSchema = require('./schema/balanceSchema')
 
