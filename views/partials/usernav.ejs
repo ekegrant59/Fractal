@@ -1,0 +1,40 @@
+<nav class="navbar navbar-custom sticky-top">
+    <div class="container-fluid">
+        <div class="me-auto ms-5">
+          <a class="navbar-brand p-0 me-0" href="/">
+            <img src="/assets/img/logo.png" alt="logo" class="nav-logo img-fluid align-top mt-sm-1">
+            <span class="ps-0 fs-3 fw-bold align-center" >FRACTAL <span style="color: rgb(212, 175, 55);">EQUITIES</span></span>
+          </a>
+        </div>
+        <div class="dropdown me-0">
+            
+            <a class="usernav-icon fs-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="">
+                <span class="align-bottom"><i class="ri-user-settings-fill"></i></span>
+              </span>
+            </a>
+            
+          
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark p-3">
+              <div id="google_translate_element"></div>
+                <script type="text/javascript">  
+                    function googleTranslateElementInit() {  
+                        new google.translate.TranslateElement(  
+                            {pageLanguage: 'en'},  
+                            'google_translate_element'  
+                        );  
+                    }  
+                </script>  
+                <script type="text/javascript"   
+                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">  
+                </script> 
+              <li class="dropdown-item mb-2"><b>Hi! <%= user.firstName %></b></li>
+              <li><a class="dropdown-item" href="/dashboard"><i class="ri-dashboard-fill align-bottom"></i><span class="ps-1">Dashboard</span></a></li>
+              <li><a class="dropdown-item trading" href="/deposit"><i class="ri-history-line align-bottom"></i><span class="trading22 ps-1">Transaction History</span></a></li>
+              <li><a class="dropdown-item" href="/account-settings"><i class="ri-settings-5-line align-bottom"></i> <span class="ps-1">Account Settings</span> </a></li>
+              <li><a class="dropdown-item mt-3 text-danger" href="/logout"><b><i class="ri-logout-box-line align-bottom"></i> <span ps-1>Log Out</span></b></a></li>
+              
+            </ul>
+          </div>
+    </div>
+  </nav>

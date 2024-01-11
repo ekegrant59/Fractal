@@ -106,9 +106,9 @@ app.get('/signup', function(req,res){
 
 app.get('/verify/:id', async function(req,res){ 
     let id = req.params.id
+    verifiedemail(id)
     const theuser = await userschema.findOne({_id: id})
     const name = theuser.firstName + ' ' +  theuser.lastName
-    verifiedemail(id)
     res.render('verify', {name: name})
 })
 
@@ -215,7 +215,8 @@ app.post('/signup', async (req,res)=>{
               balance: 0.00,
               deposit: 0.00,
               withdrawal: 0.00,
-              bonus: 0.00
+              bonus: 0.00,
+              profit:0.00
           })
           await balance.save()
 
@@ -259,10 +260,10 @@ app.post('/login', (req,res)=>{
                           httpOnly: false
                       })
   
-                      // res.redirect('/dashboard')
-                      console.log('Login Sucessful')
-                      req.flash('success', 'Login Up Successful')
-                      res.redirect('/login')
+                      res.redirect('/dashboard')
+                      // console.log('Login Sucessful')
+                      // req.flash('success', 'Login Up Successful')
+                      // res.redirect('/login')
                   } else {
                       req.flash('danger', 'Incorrect Password, Please Try Again!')
                       res.redirect('/login')
@@ -274,6 +275,34 @@ app.post('/login', (req,res)=>{
       console.log(err)
   })
 })
+
+
+app.get('/dashboard', protectRoute, async (req,res)=>{
+  // console.log(req.user)
+  try{
+      const auser = req.user.user.email
+      const theuser = await userschema.findOne({email: auser})
+      const theuser1 = await balanceSchema.findOne({email: auser})
+      res.render('dashboard', {user: theuser, user1: theuser1})
+  } catch(err){
+      console.log(err)
+  }
+})
+
+function protectRoute(req, res, next){
+  const token = req.cookies.logintoken
+  try{
+      const user = jwt.verify(token, secretkey)
+
+      req.user = user
+      // console.log(req.user)
+      next()
+  }
+  catch(err){
+      res.clearCookie('logintoken')
+      return res.redirect('/login')
+  }
+}
 
 const port = process.env.PORT || 3000
 
