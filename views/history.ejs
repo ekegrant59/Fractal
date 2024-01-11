@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - Fractal Equities</title>
+    <%- include('partials/headlinks') %>
+</head>
+<body data-bs-theme="dark">
+    <%- include('partials/usernav') %>
+    <%- include('partials/tradingview') %>
+     <main class="px-md-5 py-3 px-3">
+        <div class="px-lg-5">
+            <h1 class="font-poppins fw-semibold">Transaction History</h1>
+            <div class="bg-secondary bg-opacity-25 rounded-3 my-3">
+                <div class="px-4 py-4">
+                    <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
+                    <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
+                    <div class="transaction my-4 overflow-x-auto ">
+                        <div class="myhistory1">
+                            <div class="row myhistory w-100 text-center py-2 border border-1 rounded-1 border-secondary-subtle bg-warning bg-opacity-10">
+                                <div class="col">Trans. ID</div>
+                                <div class="col">Amount</div>
+                                <div class="col">Currency</div>
+                                <div class="col">Status</div>
+                                <div class="col">Date</div>
+                            </div>
+    
+                            <div class="row text-center thehistory py-2 w-100">
+                                <div class="col">ggg</div>
+                                <div class="col">ggg</div>
+                                <div class="col">ggg</div>
+                                <div class="col">ggg</div>
+                                <div class="col">ggg</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        let deposit = document.querySelector('.deposit')
+        let withdrawal = document.querySelector('.withdrawal')
+        let myhistory = document.querySelector('.myhistory')
+        let thehistory= document.querySelector('.thehistory')
+
+        deposit.addEventListener('click', (e)=>{
+            deposit.classList.remove('history-none')
+            deposit.classList.add('history')
+            withdrawal.classList.remove('history')
+            withdrawal.classList.add('history-none')
+            myhistory.innerHTML = `
+            <div class="col">Trans. ID</div>
+            <div class="col">Amount</div>
+            <div class="col">Currency</div>
+            <div class="col">Status</div>
+            <div class="col">Date</div>
+            `
+        })
+
+        withdrawal.addEventListener('click', (e)=>{
+            withdrawal.classList.remove('history-none')
+            withdrawal.classList.add('history')
+            deposit.classList.remove('history')
+            deposit.classList.add('history-none')
+            myhistory.innerHTML = `
+            <div class="col">Address</div>
+            <div class="col">Amount</div>
+            <div class="col">Currency</div>
+            <div class="col">Status</div>
+            <div class="col">Date</div>
+            `
+        })
+    </script>
+</body>
+</html>

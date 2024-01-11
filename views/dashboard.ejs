@@ -35,7 +35,7 @@
                 </div>
                 <div class="container-fluid my-3 px-4">
                     <div class="row gx-3 gy-3">
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3 h-100">
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
                                 <div class="rounded-3 text-light bg-primary fs-5 px-3 py-1 mb-3" style="width: min-content;">
                                     <i class="fa-solid fa-sack-dollar"></i>
@@ -45,7 +45,7 @@
 
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3 h-100">
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
                                 <div class="rounded-3 text-light bg-success fs-5 px-3 py-1 mb-3" style="width: min-content;">
                                     <i class="fa-solid fa-dollar-sign"></i>
@@ -55,7 +55,7 @@
 
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3 h-100">
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
                                 <div class="rounded-3 text-light bg-danger fs-5 px-3 py-1 mb-3" style="width: min-content;">
                                     <i class="fa-solid fa-coins"></i>
@@ -65,7 +65,7 @@
 
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3 h-100">
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
                                 <div class="rounded-3 text-light bg-info fs-5 px-3 py-1 mb-3" style="width: min-content;">
                                     <i class="fa-solid fa-gift"></i>
@@ -146,10 +146,11 @@
                                     <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
                                     <div class="transaction my-4 py-2 border border-1 rounded-1 border-secondary-subtle  overflow-x-auto">
                                         <div class="row myhistory text-center">
-                                            <div class="col-4">Transcation ID</div>
-                                            <div class="col-2">Amount</div>
-                                            <div class="col-3">Status</div>
-                                            <div class="col-3">Date</div>
+                                            <div class="col">Trans. ID</div>
+                                            <div class="col">Amount</div>
+                                            <div class="col">Status</div>
+                                            <div class="col">Coin</div>
+                                            <div class="col">Date</div>
                                         </div>
                                     </div>
                                 </p>
@@ -160,7 +161,7 @@
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-3 py-3">
                                 <p class="fs-5 fw-bold">Refer Friends to Earn Commisions</p>
                                 <p class="fw-light">Increase your commissions by inviting your friends to make deposits.</p>
-                                <p><input class="form-control ref" type="text" value="https://fractalequities.com/ref/<%= user.username %>" aria-label="readonly input example" readonly></p>
+                                <p><input class="form-control ref" type="text" value="https://fractalequities.com/invite/<%= user.username %>" aria-label="readonly input example" readonly></p>
                                 <button type="button" class="btn btn-warning copy"
                                         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem;">
                                 COPY
@@ -194,10 +195,11 @@
             withdrawal.classList.remove('history')
             withdrawal.classList.add('history-none')
             myhistory.innerHTML = `
-                <div class="col-4">Transcation ID</div>
-                <div class="col-2">Amount</div>
-                <div class="col-3">Status</div>
-                <div class="col-3">Date</div>
+            <div class="col">Trans. ID</div>
+            <div class="col">Amount</div>
+            <div class="col">Currency</div>
+            <div class="col">Status</div>
+            <div class="col">Date</div>
             `
         })
 
@@ -207,10 +209,11 @@
             deposit.classList.remove('history')
             deposit.classList.add('history-none')
             myhistory.innerHTML = `
-                <div class="col-2">Amount</div>
-                <div class="col-4">Withdrawal Address</div>
-                <div class="col-3">Status</div>
-                <div class="col-3">Date</div>
+            <div class="col">Address</div>
+            <div class="col">Amount</div>
+            <div class="col">Currency</div>
+            <div class="col">Status</div>
+            <div class="col">Date</div>
             `
         })
     </script>

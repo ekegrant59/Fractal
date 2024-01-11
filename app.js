@@ -289,6 +289,28 @@ app.get('/dashboard', protectRoute, async (req,res)=>{
   }
 })
 
+app.get('/history', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    res.render('history', {user: theuser, user1: theuser1})
+} catch(err){
+    console.log(err)
+}
+})
+
+app.get('/profile', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    res.render('profile', {user: theuser, user1: theuser1})
+} catch(err){
+    console.log(err)
+}
+})
+
 function protectRoute(req, res, next){
   const token = req.cookies.logintoken
   try{

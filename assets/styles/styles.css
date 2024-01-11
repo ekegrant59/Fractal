@@ -19,10 +19,14 @@ body{
     border: 0;
 }
 
-.navbar-toggler:focus {
+.navbar-toggler:focus, .usernav-icon:focus {
     text-decoration: none;
     outline: 0;
     box-shadow: none;
+}
+
+.usernav-icon:hover {
+    --bs-link-color-rgb: none;
 }
 
 .nav-logo{
@@ -259,7 +263,7 @@ footer a:hover{
     /* border-bottom: 2px solid #999; */
 }
 
-.myhistory{
+.myhistory1{
     width: 100%;
 }
 
@@ -269,7 +273,7 @@ footer a:hover{
         font-size: 1rem;
     }
 
-    .myhistory{
+    .myhistory1{
         width: 150%;
     }
 }
