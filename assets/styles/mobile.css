@@ -23,3 +23,6 @@ footer img{
 .myhistory1{
     width: 170%;
 }
+.myhistory2{
+    width: fit-content;
+}

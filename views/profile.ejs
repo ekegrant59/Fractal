@@ -15,9 +15,44 @@
                 <h1 class="font-poppins fw-semibold ps-4">Profile</h1>
                 <div class="bg-secondary bg-opacity-25 rounded-3 my-3">
                     <div class="p-4">
-                        <span class="px-3 py-2 history fw-semibold profile fs-5"><i class="ri-user-fill px-2 align-bottom"></i>Profile Settings</span>
-                        <span class="px-3 py-2 history-none fw-semibold password fs-5"> <i class="ri-shield-check-fill px-2 align-bottom"></i>Password/Security</span>
-                        <div class="p-4">
+                        <div class=" overflow-x-auto ">
+                            <div class=" d-flex myhistory2">
+                                <span class="px-3 py-2 history fw-semibold profile fs-5 text-nowrap"><i class="ri-user-fill px-2 align-bottom"></i>Profile Settings</span>
+                                <span class="px-3 py-2 history-none fw-semibold password fs-5"> <i class="ri-shield-check-fill px-2 align-bottom"></i>Password/Security</span>
+                            </div>
+                        </div>
+                        <div class="p-md-4 settings">
+                            <div class="row gx-5 gy-4 px-md-5 py-3">
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail1" class="form-label fw-semibold font-poppins">First Name</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail1" aria-describedby="emailHelp" value="<%= user.firstName %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail2" class="form-label fw-semibold font-poppins">Last Name</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail2" aria-describedby="emailHelp" value="<%= user.lastName %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail3" class="form-label fw-semibold font-poppins">Username</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail3" aria-describedby="emailHelp" value="<%= user.username %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail4" class="form-label fw-semibold font-poppins">Email</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail4" aria-describedby="emailHelp" value="<%= user.email %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail5" class="form-label fw-semibold font-poppins">Country</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail2" aria-describedby="emailHelp" value="<%= user.country %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail6" class="form-label fw-semibold font-poppins">Phone Number</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail6" aria-describedby="emailHelp" value="<%= user.number %>"  readonly>
+                                </div>
+                                <div class="col-12">
+                                    <label for="InputEmail7" class="form-label fw-semibold font-poppins">Date Registered</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail7" aria-describedby="emailHelp" value="<%= user.date %>"  readonly>
+                                </div>
+                            </div>
+
                             
                         </div>
                     </div>
@@ -27,5 +62,79 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        let profile = document.querySelector('.profile')
+        let password = document.querySelector('.password')
+        let settings = document.querySelector('.settings')
+
+        profile.addEventListener('click', (e)=>{
+            profile.classList.remove('history-none')
+            profile.classList.add('history')
+            password.classList.remove('history')
+            password.classList.add('history-none')
+            settings.innerHTML = `
+            <div class="row gx-5 gy-4 px-md-5 py-3">
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail1" class="form-label fw-semibold font-poppins">First Name</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail1" aria-describedby="emailHelp" value="<%= user.firstName %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail2" class="form-label fw-semibold font-poppins">Last Name</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail2" aria-describedby="emailHelp" value="<%= user.lastName %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail3" class="form-label fw-semibold font-poppins">Username</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail3" aria-describedby="emailHelp" value="<%= user.username %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail4" class="form-label fw-semibold font-poppins">Email</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail4" aria-describedby="emailHelp" value="<%= user.email %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail5" class="form-label fw-semibold font-poppins">Country</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail2" aria-describedby="emailHelp" value="<%= user.country %>"  readonly>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label for="InputEmail6" class="form-label fw-semibold font-poppins">Phone Number</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail6" aria-describedby="emailHelp" value="<%= user.number %>"  readonly>
+                                </div>
+                                <div class="col-12">
+                                    <label for="InputEmail7" class="form-label fw-semibold font-poppins">Date Registered</label>
+                                    <input type="text" class="form-control rounded-3" id="InputEmail7" aria-describedby="emailHelp" value="<%= user.date %>"  readonly>
+                                </div>
+                            </div>
+            `
+        })
+
+        password.addEventListener('click', (e)=>{
+            password.classList.remove('history-none')
+            password.classList.add('history')
+            profile.classList.remove('history')
+            profile.classList.add('history-none')
+            settings.innerHTML = `<form action="">
+                                <div class="row gx-5 gy-4 px-md-5 py-3">
+                                    <div class="col-sm-6 col-12">
+                                        <label for="InputEmail" class="form-label fw-semibold font-poppins">Old Password</label>
+                                        <input type="text" class="form-control rounded-3" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter Old Password" required>
+                                    </div> 
+                                </div>
+                                <div class="row gx-5 gy-4 px-md-5 py-3">
+                                    <div class="col-sm-6 col-12">
+                                        <label for="InputEmail11" class="form-label fw-semibold font-poppins">New Password</label>
+                                        <input type="text" class="form-control rounded-3" id="InputEmail11" aria-describedby="emailHelp" placeholder="Enter New Password" required>
+                                    </div>
+                                    <div class="col-sm-6 col-12">
+                                        <label for="InputEmail111" class="form-label fw-semibold font-poppins">Confirm Password</label>
+                                        <input type="text" class="form-control rounded-3" id="InputEmail111" aria-describedby="emailHelp" placeholder="Confirm Password" required>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button class="btn btn-warning" disabled>Update</button>
+                                    </div>
+                                </div>
+                                </form>`
+        })
+    </script>
 </body>
 </html>
