@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fund your account - Fractal Equities</title>
+    <%- include('partials/headlinks') %>
+</head>
+<body data-bs-theme="dark">
+    <%- include('partials/usernav') %>
+    <%- include('partials/tradingview') %>
+     <main class="px-md-5 py-3 px-3">
+        <div class="px-lg-5">
+            <div class="px-lg-5">
+                <h1 class="font-poppins fw-semibold ps-4">Fund Your Account</h1>
+
+                <div class="bg-secondary bg-opacity-25 rounded-3 my-3">
+                    <div class="p-4">
+
+                        <div>
+                            <form action="/deposit" method="post">
+                                <div class="row gx-5 gy-3">
+                                    <div class="col-md-6 col-12 py-3">
+                                        <div class="my-auto">
+                                            <div class="mb-4">
+                                                <p class="fw-semibold mb-0">Total Deposit</p>
+                                                <p class="fw-bold fs-3">$ <%= user1.deposit %>.00</p>
+                                                <input type="text" value="<%= user.username %>" class="d-none" name="username">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="InputEmail1" class="form-label fw-semibold font-poppins">Enter Amount</label>
+                                                <input type="number" class="form-control rounded-3" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter Amount" required name="amount">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="selectPlan" class="form-label">Choose a Payment method
+                                                </label>
+                                                <select class="form-select" id="selectMethod" name="coin">
+                                                    <option value="USDT-ETH" selected>USDT (ERC-20)</option>
+                                                    <option value="USDT-TRC">USDT (TRC-20)</option>
+                                                    <option value="BTC">Bitcoin</option>
+                                                    <option value="ETH">Etheruem</option>
+                                                    <option value="BNB">BNB Smart Chain</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 ">
+                                                <p class="mb-2 fw-light">Don't have crypto? Buy directly to the address displayed on your screen using the Links below</p>
+                                                <div class="overflow-x-auto">
+                                                    <div class="row g-3 text-center fw-light myhistory3">
+                                                        <div class="col text-center"><span class=""><a href="https://www.moonpay.com/" class="btn btn-warning">Moonpay.com</a></span></div>
+                                                        <div class="col"><span><a href="https://exchange.mercuryo.io/" class="btn btn-warning">Mercury.io</a></span></div>
+                                                        <div class="col"><a href="https://ramp.network/buy" class="btn btn-warning">Ramp.network</a></div>
+                                                        <div class="col"><span><a href="https://buy.bitcoin.com/" class="btn btn-warning">Bitcoin.com</a></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 p-md-5 mt-0">
+                                        <div class="text-center address">
+                                            <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 pb-3 pt-4 pt-sm-0 mt-0">
+                                        <div class="mb-3">
+                                            <label for="InputEmail11" class="form-label fw-semibold font-poppins">Transaction Hash</label>
+                                            <input type="text" class="form-control rounded-3" id="InputEmail11" aria-describedby="emailHelp" placeholder="Enter Transation Hash to validate deposit" required name="transactID">
+                                        </div>
+                                        <div class="text-center text-md-start mt-4">
+                                            <button class="btn btn3 fw-bold font-poppins" type="submit">DEPOSIT</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        let select = document.querySelector('#selectMethod')
+        let address = document.querySelector('.address')
+        
+        select.addEventListener('change', (e)=>{
+            // console.log(e.target.value)
+            let selected = e.target.value
+
+            // console.log(selected)
+
+            if(selected == 'USDT-ETH'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                `
+            } else if (selected == 'USDT-TRC'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDT (TRC-20) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/tron.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="TSJ91pv88Vx4d3ueDKZ9CgBuFKENRN3BQP" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                `
+            } else if (selected == 'BTC'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">BITCOIN Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/btc.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="bc1qtddu4txxcv2q9hmy43peyqse55ljmv77xwc3wq" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                `
+            }  else if (selected == 'ETH'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">ETH Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                `
+            } else if (selected == 'BNB'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">BNB Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                COPY
+                                                </button></span>
+                                            </div>
+                `
+            }
+        })
+    </script>
+</body>
+</html>

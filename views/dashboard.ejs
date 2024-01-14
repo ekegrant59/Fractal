@@ -27,8 +27,8 @@
                         </div>
     
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 mx-2"><a href="" class="btn btn3 font-poppins">Deposit</a></p>
-                            <p class="mb-0 mx-2"><a href="" class="btn btn3 font-poppins">Withdraw</a></p>
+                            <p class="mb-0 mx-2"><a href="/deposit" class="btn btn3 font-poppins">Deposit</a></p>
+                            <p class="mb-0 mx-2"><a href="/withdraw" class="btn btn3 font-poppins">Withdraw</a></p>
                         </div>
                     </div>
                     <p class="fw-bold fs-6 mb-0 ps-1"><span>0</span> BTC</p>
@@ -141,19 +141,47 @@
                         <div class="col-12 col-lg-8">
                             <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
                                 <p class="fs-5 fw-bold">Recent Transactions</p>
-                                <p>
+                                <div>
                                     <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
                                     <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
-                                    <div class="transaction my-4 py-2 border border-1 rounded-1 border-secondary-subtle  overflow-x-auto">
-                                        <div class="row myhistory text-center w-100">
-                                            <div class="col">Trans. ID</div>
-                                            <div class="col">Amount</div>
-                                            <div class="col">Status</div>
-                                            <div class="col">Coin</div>
-                                            <div class="col">Date</div>
+                                    <div class="transaction mt-4 py-2 overflow-x-auto">
+                                        <div class="myhistory1">
+                                            <div class="row myhistory text-center border border-1 rounded-1 border-secondary-subtle">
+                                                <div class="col">Trans. ID</div>
+                                                <div class="col">Amount</div>
+                                                <div class="col">Status</div>
+                                                <div class="col">Currency</div>
+                                                <div class="col">Date</div>
+                                            </div>
+                                            <div class="thehistory py-2">
+                                                <% if (deposits.length > 0) { %>
+                                                    <div class="container-fluid">
+                                                        <% deposits.forEach(deposit =>{ %>
+                                                            <div class="row text-center w-100 py-1">
+                                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.transactID %> </b></div>
+                                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
+                                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                                    <% if (deposit.status == 'Pending'){%>
+                                                                        <b class="text-warning"><%= deposit.status %> </b>
+                                                                    <% }else{ %>
+                                                                        <b class="text-success"><%= deposit.status %> </b>
+                                                                    <% } %>
+                                                                </div>
+                                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
+                                                                
+                                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.date %> </b></div>
+                                                            </div>
+                                                        <% }) %> 
+                                                    </div>
+                                                <% } else { %>
+                                                    <div class="text-center">
+                                                        <p class="mb-0">No Transactions found.....</p>
+                                                    </div>
+                                                <% } %>
+                                            </div>
                                         </div>
                                     </div>
-                                </p>
+                                </div>
                                 <a href="/history" class="btn btn-outline-warning px-3 py-1">View All</a>
                             </div>
                         </div>

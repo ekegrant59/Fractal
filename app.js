@@ -9,6 +9,7 @@ const session = require('express-session')
 const adminschema = require('./schema/adminSchema')
 const userschema = require('./schema/userSchema')
 const balanceSchema = require('./schema/balanceSchema')
+const depositSchema = require('./schema/depositSchema')
 
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
@@ -283,7 +284,9 @@ app.get('/dashboard', protectRoute, async (req,res)=>{
       const auser = req.user.user.email
       const theuser = await userschema.findOne({email: auser})
       const theuser1 = await balanceSchema.findOne({email: auser})
-      res.render('dashboard', {user: theuser, user1: theuser1})
+      const username = theuser.username
+      const deposits = await depositSchema.find({username: username})
+      res.render('dashboard', {user: theuser, user1: theuser1, deposits: deposits})
   } catch(err){
       console.log(err)
   }
@@ -294,7 +297,9 @@ app.get('/history', protectRoute, async (req,res)=>{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
     const theuser1 = await balanceSchema.findOne({email: auser})
-    res.render('history', {user: theuser, user1: theuser1})
+    const username = theuser.username
+    const deposits = await depositSchema.find({username: username})
+    res.render('history', {user: theuser, user1: theuser1, deposits: deposits})
 } catch(err){
     console.log(err)
 }
@@ -306,6 +311,27 @@ app.get('/profile', protectRoute, async (req,res)=>{
     const theuser = await userschema.findOne({email: auser})
     const theuser1 = await balanceSchema.findOne({email: auser})
     res.render('profile', {user: theuser, user1: theuser1})
+} catch(err){
+    console.log(err)
+}
+})
+app.get('/deposit', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    res.render('deposit', {user: theuser, user1: theuser1})
+} catch(err){
+    console.log(err)
+}
+})
+
+app.get('/withdraw', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    res.render('withdraw', {user: theuser, user1: theuser1})
 } catch(err){
     console.log(err)
 }
@@ -325,6 +351,32 @@ function protectRoute(req, res, next){
       return res.redirect('/login')
   }
 }
+
+app.post('/deposit', async (req,res)=>{
+  const details = req.body
+  const date = new Date()
+
+  deposited()
+
+  async function deposited(){
+    try{
+        const deposit = new depositSchema({
+            username: details.username,
+            transactID: details.transactID,
+            coin: details.coin,
+            amount: details.amount,
+            status: 'Pending',
+            date: date
+        })
+        await deposit.save()
+
+        res.redirect('/history')
+    } catch(err){
+        console.log(err)
+    }
+}
+
+})
 
 const port = process.env.PORT || 3000
 
