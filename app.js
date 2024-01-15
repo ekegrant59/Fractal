@@ -294,7 +294,7 @@ app.get('/dashboard', protectRoute, async (req,res)=>{
   }
 })
 
-app.get('/history', protectRoute, async (req,res)=>{
+app.get('/dashboard/history', protectRoute, async (req,res)=>{
   try{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
@@ -308,7 +308,7 @@ app.get('/history', protectRoute, async (req,res)=>{
 }
 })
 
-app.get('/profile', protectRoute, async (req,res)=>{
+app.get('/dashboard/profile', protectRoute, async (req,res)=>{
   try{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
@@ -318,7 +318,7 @@ app.get('/profile', protectRoute, async (req,res)=>{
     console.log(err)
 }
 })
-app.get('/deposit', protectRoute, async (req,res)=>{
+app.get('/dashboard/deposit', protectRoute, async (req,res)=>{
   try{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
@@ -329,7 +329,7 @@ app.get('/deposit', protectRoute, async (req,res)=>{
 }
 })
 
-app.get('/withdraw', protectRoute, async (req,res)=>{
+app.get('/dashboard/withdraw', protectRoute, async (req,res)=>{
   try{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
@@ -421,6 +421,11 @@ app.post('/withdraw',async(req,res)=>{
       }
   }
 
+})
+
+app.get('/logout', (req,res)=>{
+  res.clearCookie('logintoken')
+   return res.redirect('/login')
 })
 
 const port = process.env.PORT || 3000
