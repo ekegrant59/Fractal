@@ -10,6 +10,7 @@ const adminschema = require('./schema/adminSchema')
 const userschema = require('./schema/userSchema')
 const balanceSchema = require('./schema/balanceSchema')
 const depositSchema = require('./schema/depositSchema')
+const withdrawSchema = require('./schema/withdrawSchema')
 
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
@@ -286,7 +287,8 @@ app.get('/dashboard', protectRoute, async (req,res)=>{
       const theuser1 = await balanceSchema.findOne({email: auser})
       const username = theuser.username
       const deposits = await depositSchema.find({username: username})
-      res.render('dashboard', {user: theuser, user1: theuser1, deposits: deposits})
+      const withdrawals = await withdrawSchema.find({username: username})
+      res.render('dashboard', {user: theuser, user1: theuser1, deposits: deposits, withdrawals: withdrawals})
   } catch(err){
       console.log(err)
   }
@@ -299,7 +301,8 @@ app.get('/history', protectRoute, async (req,res)=>{
     const theuser1 = await balanceSchema.findOne({email: auser})
     const username = theuser.username
     const deposits = await depositSchema.find({username: username})
-    res.render('history', {user: theuser, user1: theuser1, deposits: deposits})
+    const withdrawals = await withdrawSchema.find({username: username})
+    res.render('history', {user: theuser, user1: theuser1, deposits: deposits, withdrawals: withdrawals})
 } catch(err){
     console.log(err)
 }
@@ -375,6 +378,48 @@ app.post('/deposit', async (req,res)=>{
         console.log(err)
     }
 }
+
+})
+
+app.post('/withdraw',async(req,res)=>{
+  const details = req.body
+  const date = new Date()
+  const username = details.username
+
+  const theuser = await userschema.findOne({username: username})
+  const theuser1 = await balanceSchema.findOne({username: username})
+
+  let mypassword = theuser.password
+  let mybalance = theuser1.balance
+
+
+  if (details.amount > mybalance){
+    req.flash('danger', 'Insuccifient Funds, Please Try Again')
+    res.redirect('/withdraw')
+  } else if (details.password != mypassword){
+    req.flash('danger', 'Incorrect Password, Please Try Again')
+    res.redirect('/withdraw')
+  } else{
+    withdraw()
+    req.flash('success', 'Withdrawal Successful')
+    res.redirect('/withdraw')
+  }  
+
+  async function withdraw(){
+    try{
+      const withdraw = new withdrawSchema({
+          username: details.username,
+          address: details.address,
+          coin: details.coin,
+          amount: details.amount,
+          status: 'Pending',
+          date: date
+      })
+      await withdraw.save()
+      } catch(err){
+          console.log(err)
+      }
+  }
 
 })
 

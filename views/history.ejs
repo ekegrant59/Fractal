@@ -51,6 +51,32 @@
                                     </div>
                                 <% } %>
                             </div>
+
+                            <!-- <div class="thehistory py-2">
+                                <% if (withdrawals.length > 0) { %>
+                                    <div class="container-fluid">
+                                        <% withdrawals.forEach(withdrawal =>{ %>
+                                            <div class="row text-center w-100 py-1">
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.address %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= withdrawal.amount %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.coin %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                    <% if (withdrawal.status == 'Pending'){%>
+                                                        <b class="text-warning"><%= withdrawal.status %> </b>
+                                                    <% }else{ %>
+                                                        <b class="text-success"><%= withdrawal.status %> </b>
+                                                    <% } %>
+                                                </div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.date %> </b></div>
+                                            </div>
+                                        <% }) %> 
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center">
+                                        <p class="mb-0">No Transactions found.....</p>
+                                    </div>
+                                <% } %>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -78,6 +104,32 @@
             <div class="col">Status</div>
             <div class="col">Date</div>
             `
+            thehistory.innerHTML = `<% if (deposits.length > 0) { %>
+                                    <div class="container-fluid">
+                                        <% deposits.forEach(deposit =>{ %>
+                                            <div class="row text-center w-100 py-1">
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.transactID %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                    <% if (deposit.status == 'Pending'){%>
+                                                        <b class="text-warning"><%= deposit.status %> </b>
+                                                    <% }else{ %>
+                                                        <b class="text-success"><%= deposit.status %> </b>
+                                                    <% } %>
+                                                </div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.date %> </b></div>
+                                            </div>
+                                        <% }) %> 
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center">
+                                        <p class="mb-0">No Transactions found.....</p>
+                                    </div>
+                                <% } %>
+            
+            `
+            
         })
 
         withdrawal.addEventListener('click', (e)=>{
@@ -91,6 +143,30 @@
             <div class="col">Currency</div>
             <div class="col">Status</div>
             <div class="col">Date</div>
+            `
+            thehistory.innerHTML = `<% if (withdrawals.length > 0) { %>
+                                    <div class="container-fluid">
+                                        <% withdrawals.forEach(withdrawal =>{ %>
+                                            <div class="row text-center w-100 py-1">
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.address %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= withdrawal.amount %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.coin %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                    <% if (withdrawal.status == 'Pending'){%>
+                                                        <b class="text-warning"><%= withdrawal.status %> </b>
+                                                    <% }else{ %>
+                                                        <b class="text-success"><%= withdrawal.status %> </b>
+                                                    <% } %>
+                                                </div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.date %> </b></div>
+                                            </div>
+                                        <% }) %> 
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center">
+                                        <p class="mb-0">No Transactions found.....</p>
+                                    </div>
+                                <% } %>
             `
         })
     </script>

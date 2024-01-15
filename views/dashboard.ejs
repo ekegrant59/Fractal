@@ -145,7 +145,7 @@
                                     <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
                                     <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
                                     <div class="transaction mt-4 py-2 overflow-x-auto">
-                                        <div class="myhistory1">
+                                        <div class="myhistory1 text-center">
                                             <div class="row myhistory text-center border border-1 rounded-1 border-secondary-subtle">
                                                 <div class="col">Trans. ID</div>
                                                 <div class="col">Amount</div>
@@ -216,6 +216,7 @@
 
         let deposit = document.querySelector('.deposit')
         let withdrawal = document.querySelector('.withdrawal')
+        let thehistory= document.querySelector('.thehistory')
 
         deposit.addEventListener('click', (e)=>{
             deposit.classList.remove('history-none')
@@ -228,6 +229,32 @@
             <div class="col">Currency</div>
             <div class="col">Status</div>
             <div class="col">Date</div>
+            `
+
+            thehistory.innerHTML = `<% if (deposits.length > 0) { %>
+                                    <div class="container-fluid">
+                                        <% deposits.forEach(deposit =>{ %>
+                                            <div class="row text-center w-100 py-1">
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.transactID %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                    <% if (deposit.status == 'Pending'){%>
+                                                        <b class="text-warning"><%= deposit.status %> </b>
+                                                    <% }else{ %>
+                                                        <b class="text-success"><%= deposit.status %> </b>
+                                                    <% } %>
+                                                </div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.date %> </b></div>
+                                            </div>
+                                        <% }) %> 
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center">
+                                        <p class="mb-0">No Transactions found.....</p>
+                                    </div>
+                                <% } %>
+            
             `
         })
 
@@ -242,6 +269,31 @@
             <div class="col">Currency</div>
             <div class="col">Status</div>
             <div class="col">Date</div>
+            `
+
+            thehistory.innerHTML = `<% if (withdrawals.length > 0) { %>
+                                    <div class="container-fluid">
+                                        <% withdrawals.forEach(withdrawal =>{ %>
+                                            <div class="row text-center w-100 py-1">
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.address %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= withdrawal.amount %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.coin %> </b></div>
+                                                <div class="col text-nowrap overflow-x-auto"> 
+                                                    <% if (withdrawal.status == 'Pending'){%>
+                                                        <b class="text-warning"><%= withdrawal.status %> </b>
+                                                    <% }else{ %>
+                                                        <b class="text-success"><%= withdrawal.status %> </b>
+                                                    <% } %>
+                                                </div>
+                                                <div class="col text-nowrap overflow-x-auto"><b><%= withdrawal.date %> </b></div>
+                                            </div>
+                                        <% }) %> 
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center">
+                                        <p class="mb-0">No Transactions found.....</p>
+                                    </div>
+                                <% } %>
             `
         })
     </script>
