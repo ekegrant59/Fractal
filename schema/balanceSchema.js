@@ -5,6 +5,7 @@ mongoose.connect(mongodb)
 const balanceSchema = new mongoose.Schema({
     username: String,
     email: String,
+    name: String,
     balance: Number,
     deposit: Number,
     bonus: Number,

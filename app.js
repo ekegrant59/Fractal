@@ -214,6 +214,7 @@ app.post('/signup', async (req,res)=>{
           const balance = new balanceSchema({
               username: details.username,
               email: details.email,
+              name: details.firstName + '' + details.lastName,
               balance: 0.00,
               deposit: 0.00,
               withdrawal: 0.00,
@@ -539,11 +540,11 @@ app.get('/admin/update',protectAdminRoute, (req,res)=>{
 })
 
 app.get('/admin/edit/:id', async (req,res)=>{
-    let email = req.params.id 
-    // console.log(email)
+    let username = req.params.id 
+    // console.log(username)
 
     try{
-        let balance = await balanceSchema.findOne({email: email})
+        let balance = await balanceSchema.findOne({username: username})
     // console.log(balance)
         res.send(balance)
     } catch(err){
@@ -553,14 +554,14 @@ app.get('/admin/edit/:id', async (req,res)=>{
 
 app.post('/admin/edit', (req,res)=>{
     const details = req.body
-    const filter = {email: details.email}
-    balanceSchema.findOneAndUpdate(filter, {$set: {balance: details.balance, ROI: details.ROI, bonus: details.bonus}}, {new: true}, (err,dets)=>{
+    const filter = {username: details.username}
+    balanceSchema.findOneAndUpdate(filter, {$set: {balance: details.balance, deposit: details.deposit, bonus: details.bonus, withdrawal: details.withdrawal, profit: details.profit}}, {new: true}, (err,dets)=>{
         if (err){
             console.log(err)
             req.flash('danger', 'An Error Occured, Please try again')
             res.redirect('/admin/update')
         } else{
-            req.flash('success', 'User Updated Successfully')
+            req.flash('success', 'User Account Updated Successfully')
             res.redirect('/admin/update')
         }
     })
