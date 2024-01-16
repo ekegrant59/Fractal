@@ -22,19 +22,19 @@
                                     <div class="row font-lato">
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Account Balance</p>
-                                            <p class="fw-bold fs-2 mb-3 ">$ <%= user1.balance %>.00</p>
+                                            <p class="fw-bold fs-2 mb-3 color1">$ <%= user1.balance %>.00</p>
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Deposit</p>
-                                            <p class="fw-bold fs-2 mb-3">$ <%= user1.deposit %>.00</p>                                          
+                                            <p class="fw-bold fs-2 mb-3 text-primary">$ <%= user1.deposit %>.00</p>                                          
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Profit</p>
-                                            <p class="fw-bold fs-2 mb-3 ">$ <%= user1.profit %>.00</p>                                       
+                                            <p class="fw-bold fs-2 mb-3 text-success">$ <%= user1.profit %>.00</p>                                       
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Bonus</p>
-                                            <p class="fw-bold fs-2 mb-3">$ <%= user1.bonus %>.00</p>                                          
+                                            <p class="fw-bold fs-2 mb-3 text-info">$ <%= user1.bonus %>.00</p>                                          
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                                 <option value="USDT-ETH" selected>USDT (ERC-20)</option>
                                                 <option value="USDT-TRC">USDT (TRC-20)</option>
                                                 <option value="BTC">Bitcoin</option>
-                                                <option value="ETH">Etheruem</option>
+                                                <option value="ETH">Ethereum</option>
                                                 <option value="BNB">BNB Smart Chain</option>
                                             </select>
                                         </div>
@@ -66,7 +66,7 @@
                                             <input type="text" class="form-control rounded-3" id="InputEmail11" aria-describedby="emailHelp" placeholder="Enter Withdrawal Address" required name="address">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="InputEmail111" class="form-label fw-semibold font-poppins">Confrim Password</label>
+                                            <label for="InputEmail111" class="form-label fw-semibold font-poppins">Confirm Password</label>
                                             <input type="password" class="form-control rounded-3" id="InputEmail111" aria-describedby="emailHelp" placeholder="Enter Your Password" required name="password">
                                         </div>
                                         <input type="text" value="<%= user.username %>" class="d-none" name="username">

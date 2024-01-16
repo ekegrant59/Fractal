@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const session = require('express-session')
-const adminschema = require('./schema/adminSchema')
+const adminSchema = require('./schema/adminSchema')
 const userschema = require('./schema/userSchema')
 const balanceSchema = require('./schema/balanceSchema')
 const depositSchema = require('./schema/depositSchema')
@@ -427,6 +427,210 @@ app.get('/logout', (req,res)=>{
   res.clearCookie('logintoken')
    return res.redirect('/login')
 })
+
+app.get('/adminregister', (req,res)=>{
+      res.render('adminregister')
+  })
+  
+  app.post('/adminregister', async(req,res)=>{
+        const regInfo = req.body
+        const password = regInfo.password
+        const password2 = regInfo.password2
+
+      if (password != password2){
+        req.flash('danger', 'Passwords do not match, Please Try Again')
+        res.redirect('/adminregister')
+      } else {
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+      
+          run()
+          async function run(){
+              try {
+                  const admin = new adminSchema({
+                      email: regInfo.email,
+                      password: hashedPassword
+                  })
+                  await admin.save()
+              }
+              catch (err) {
+                  console.log(err.message)
+              
+              }
+          }
+          req.flash('success', 'Registeration Successful, Please Log In')
+          res.redirect('/admin')
+      }
+        
+      })
+  
+app.get('/admin',protectAdminRoute, async (req,res)=>{
+  try{
+      const user = await userschema.find()
+      const pendDeposit = await depositSchema.find({status: 'Pending'})
+      const confirmDeposit = await depositSchema.find({status: 'Confirmed'})
+      const pendingwithdrawal = await withdrawSchema.find({status: 'Pending'})
+      const confirmwithdrawal = await withdrawSchema.find({status: 'Confirmed'})
+      const failedwithdrawal = await withdrawSchema.find({status: 'Failed'})
+      res.render('admin', {users: user, pendDeposits: pendDeposit, confirmDeposits: confirmDeposit, confirmWithdrawals: confirmwithdrawal, pendingWithdrawals: pendingwithdrawal, failedwithdrawals:failedwithdrawal })
+  } catch(err){
+      console.log(err)
+  }
+})
+  
+  function protectAdminRoute(req, res, next){
+      const token = req.cookies.admintoken
+      try{
+          const user = jwt.verify(token, adminkey)
+  
+          req.user = user
+          // console.log(req.user)
+          next()
+      }
+      catch(err){
+          res.clearCookie('admintoken')
+          return res.render('adminlogin')
+      }
+  }
+
+  app.post('/adminlogin', (req,res)=>{
+    const loginInfo = req.body
+
+    const email = loginInfo.email
+    const password = loginInfo.password
+
+    adminSchema.findOne({email})
+    .then((admin)=>{
+        adminSchema.findOne({email: email}, (err,details)=>{
+            if(!details){
+                req.flash('danger','User not found!, Please try again')
+                res.redirect('/admin')
+            } else{
+                bcrypt.compare(password, admin.password, async (err,data)=>{
+                    if(data){
+                        const payload1 = {
+                            user:{
+                                email: admin.email
+                            }
+                        }
+                        const token1 = jwt.sign(payload1, adminkey,{
+                            expiresIn: '3600s'
+                        })
+
+                        res.cookie('admintoken', token1, {
+                            httpOnly: false
+                        })
+
+                        res.redirect('/admin')
+                    } else{
+                        req.flash('danger', 'Incorrect Password, Please Try Again!')
+                        res.redirect('/admin')
+                    }
+                })
+            }
+        })
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/admin/update',protectAdminRoute, (req,res)=>{
+    res.render('adminUpdate')
+})
+
+app.get('/admin/edit/:id', async (req,res)=>{
+    let email = req.params.id 
+    // console.log(email)
+
+    try{
+        let balance = await balanceSchema.findOne({email: email})
+    // console.log(balance)
+        res.send(balance)
+    } catch(err){
+        console.log(err)
+    }
+})
+
+app.post('/admin/edit', (req,res)=>{
+    const details = req.body
+    const filter = {email: details.email}
+    balanceSchema.findOneAndUpdate(filter, {$set: {balance: details.balance, ROI: details.ROI, bonus: details.bonus}}, {new: true}, (err,dets)=>{
+        if (err){
+            console.log(err)
+            req.flash('danger', 'An Error Occured, Please try again')
+            res.redirect('/admin/update')
+        } else{
+            req.flash('success', 'User Updated Successfully')
+            res.redirect('/admin/update')
+        }
+    })
+
+})
+
+app.post('/confirm/deposit', (req,res)=>{
+    const body = req.body
+    // console.log(body.transactID)
+    const filter = {transactID: body.transactID}
+    depositSchema.findOneAndUpdate(filter, {$set: {status: 'Confirmed'}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    res.redirect('/admin')
+})
+
+app.post('/unconfirm/deposit', (req,res)=>{
+    const body = req.body
+    // console.log(body.transactID)
+    const filter = {transactID: body.transactID}
+    depositSchema.findOneAndUpdate(filter, {$set: {status: 'Pending'}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    res.redirect('/admin')
+})
+
+app.post('/confirm/withdrawal', (req,res)=>{
+    const body = req.body
+    // console.log(body.transactID)
+    // console.log(body.id)
+    const filter = {_id: body.id}
+    withdrawSchema.findOneAndUpdate(filter, {$set: {status: 'Confirmed'}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    res.redirect('/admin')
+})
+
+app.post('/failed/withdrawal', (req,res)=>{
+    const body = req.body
+    // console.log(body.transactID)
+    // console.log(body.id)
+    const filter = {_id: body.id}
+    withdrawSchema.findOneAndUpdate(filter, {$set: {status: 'Failed'}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    res.redirect('/admin')
+})
+
+app.post('/unconfirm/withdrawal', async (req,res)=>{
+    const body = req.body
+    // console.log(body.transactID)
+    const filter = {_id: body.id}
+    // const found = await withdrawSchema.findOne(filter)
+    // console.log(found)
+    withdrawSchema.findOneAndUpdate(filter, {$set: {status: 'Pending'}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    res.redirect('/admin')
+})
+
 
 const port = process.env.PORT || 3000
 
