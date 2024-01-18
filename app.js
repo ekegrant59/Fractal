@@ -56,8 +56,11 @@ var transporter = nodemailer.createTransport(
         port: 587,
         secure: false,
         auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     }
 );
@@ -158,6 +161,30 @@ async function verifyemail(email){
         console.log(`Nodemailer error sending email to ${email}`, error);
       }
 }
+async function newuser(email){
+    const theuser = await userschema.findOne({email: email})
+    const name = theuser.firstName + ' ' +  theuser.lastName
+    const username = theuser.username
+
+    // console.log(id, email, name)
+
+    const mailOptions = {
+        from: '"Fractal Equities" support@fractalequities.com', // sender address
+        template: "newuser", // the name of the template file, i.e., email.handlebars
+        to: 'contactfractalequities@gmail.com',
+        subject: 'User Registeration!!',
+        context: {
+          name: name,
+          username: username,
+          email: email
+        },
+      };
+      try {
+        await transporter.sendMail(mailOptions);
+      } catch (error) {
+        console.log(`Nodemailer error sending email to contactfractalequities@gmail.com`, error);
+      }
+}
 
 app.post('/signup', async (req,res)=>{
   const details = req.body
@@ -224,6 +251,7 @@ app.post('/signup', async (req,res)=>{
           await balance.save()
 
           verifyemail(email)
+          newuser(email)
 
         //   console.log(user)
           req.flash('success', 'Sign Up Successfully, Verification Link Sent To Your Email!')
