@@ -241,7 +241,7 @@ app.post('/signup', async (req,res)=>{
           const balance = new balanceSchema({
               username: details.username,
               email: details.email,
-              name: details.firstName + '' + details.lastName,
+              name: details.firstName + ' ' + details.lastName,
               balance: 0.00,
               deposit: 0.00,
               withdrawal: 0.00,
