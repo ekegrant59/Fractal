@@ -56,15 +56,17 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12 p-md-5 mt-0">
-                                        <div class="text-center address">
-                                            <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
-                                            <div class="mb-3">
-                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                        <div class="text-center">
+                                            <div class="address">
+                                                <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
+                                                <div class="mb-3">
+                                                    <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                </div>
                                             </div>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <input type="text" class="form-control text-center ref" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
                                                 <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;" id="copy">
                                                 COPY
                                                 </button></span>
                                             </div>
@@ -92,8 +94,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <script>
+
         let select = document.querySelector('#selectMethod')
         let address = document.querySelector('.address')
+        let ref = document.querySelector('.ref')
         
         select.addEventListener('change', (e)=>{
             // console.log(e.target.value)
@@ -103,75 +107,58 @@
 
             if(selected == 'USDT-ETH'){
                 address.innerHTML = `
-                        <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
+                                            <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
-                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
-                                                COPY
-                                                </button></span>
-                                            </div>
                 `
+                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                copy.innerHTML = 'COPY'
             } else if (selected == 'USDT-TRC'){
                 address.innerHTML = `
                         <p class="fw-bold fs-5">USDT (TRC-20) Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/tron.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="TSJ91pv88Vx4d3ueDKZ9CgBuFKENRN3BQP" aria-label="readonly input example" readonly>
-                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
-                                                COPY
-                                                </button></span>
-                                            </div>
                 `
+                ref.value = 'TSJ91pv88Vx4d3ueDKZ9CgBuFKENRN3BQP'
+                copy.innerHTML = 'COPY'
             } else if (selected == 'BTC'){
                 address.innerHTML = `
                         <p class="fw-bold fs-5">BITCOIN Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/btc.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="bc1qtddu4txxcv2q9hmy43peyqse55ljmv77xwc3wq" aria-label="readonly input example" readonly>
-                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
-                                                COPY
-                                                </button></span>
-                                            </div>
                 `
+                ref.value = 'bc1qtddu4txxcv2q9hmy43peyqse55ljmv77xwc3wq'
+                copy.innerHTML = 'COPY'
             }  else if (selected == 'ETH'){
                 address.innerHTML = `
                         <p class="fw-bold fs-5">ETH Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
-                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
-                                                COPY
-                                                </button></span>
-                                            </div>
                 `
+                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                copy.innerHTML = 'COPY'
             } else if (selected == 'BNB'){
                 address.innerHTML = `
                         <p class="fw-bold fs-5">BNB Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
-                                                <span class="input-group-text"><button type="button" class="btn btn-warning copy"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;">
-                                                COPY
-                                                </button></span>
-                                            </div>
                 `
+                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                copy.innerHTML = 'COPY'
             }
+        })
+
+        let copy = document.querySelector('#copy')
+        
+        copy.addEventListener('click', (e)=>{
+            // e.preventDefault()
+            navigator.clipboard.writeText(ref.value)
+            copy.innerHTML = 'COPIED!'
         })
     </script>
 </body>
