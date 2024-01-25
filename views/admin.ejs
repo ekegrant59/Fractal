@@ -30,6 +30,7 @@
                                     <div class="col">Country</div>
                                     <div class="col">Number</div>
                                     <div class="col">Date</div>
+                                    <div class="col">Delete</div>
                                 </div>
         
                                 <div class="thehistory py-2 overflow-y-auto" style="max-height: 400px;">
@@ -45,6 +46,12 @@
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.country %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.number %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.date %> </b></div>
+                                                    <div class="col text-nowrap overflow-x-auto text-center"><b>
+                                                        <form action="/delete/user" method="post">
+                                                            <input type="text" name="id" value="<%= user.id %>" class="d-none">
+                                                            <button type="submit" class="btn btn-warning px-2 py-0 fw-bold"><i class="ri-delete-bin-2-line"></i></button>
+                                                        </form>
+                                                    </b></div>
                                                 </div>
                                             <% }) %> 
                                         </div>

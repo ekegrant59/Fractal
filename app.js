@@ -659,6 +659,28 @@ app.post('/unconfirm/withdrawal', async (req,res)=>{
     res.redirect('/admin')
 })
 
+app.post('/delete/user', async (req,res)=>{
+    const body = req.body
+    const filter = {_id: body.id}
+
+    let user = userschema.findOne(filter)
+    let username = user.username
+
+    userschema.deleteOne(filter).then(function(){
+        console.log("User deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+
+    balanceSchema.deleteOne({username: username}).then(function(){
+        console.log("User Balance deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+
+    res.redirect('/admin')
+})
+
 
 const port = process.env.PORT || 3000
 
