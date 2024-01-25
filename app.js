@@ -226,7 +226,7 @@ app.post('/signup', async (req,res)=>{
       try{
           const user = new userschema({
               firstName: details.firstName,
-              username: details.username,
+              username: username.trim(),
               lastName: details.lastName,
               email: details.email,
               encryptedpassword: hashedPassword,
@@ -239,7 +239,7 @@ app.post('/signup', async (req,res)=>{
           await user.save()
 
           const balance = new balanceSchema({
-              username: details.username,
+              username: username.trim(),
               email: details.email,
               name: details.firstName + ' ' + details.lastName,
               balance: 0.00,
