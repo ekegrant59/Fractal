@@ -401,7 +401,7 @@ app.post('/deposit', async (req,res)=>{
         })
         await deposit.save()
 
-        res.redirect('/history')
+        res.redirect('/dashboard/history')
     } catch(err){
         console.log(err)
     }
@@ -430,7 +430,7 @@ app.post('/withdraw',async(req,res)=>{
   } else{
     withdraw()
     req.flash('success', 'Withdrawal Successful')
-    res.redirect('/withdraw')
+    res.redirect('/dashboard/withdraw')
   }  
 
   async function withdraw(){
@@ -598,7 +598,7 @@ app.post('/admin/edit', (req,res)=>{
 app.post('/confirm/deposit', (req,res)=>{
     const body = req.body
     // console.log(body.transactID)
-    const filter = {transactID: body.transactID}
+    const filter = {_id: body.id}
     depositSchema.findOneAndUpdate(filter, {$set: {status: 'Confirmed'}}, {new: true}, (err)=>{
         if(err){
             console.log(err)
@@ -610,7 +610,7 @@ app.post('/confirm/deposit', (req,res)=>{
 app.post('/unconfirm/deposit', (req,res)=>{
     const body = req.body
     // console.log(body.transactID)
-    const filter = {transactID: body.transactID}
+    const filter = {_id: body.id}
     depositSchema.findOneAndUpdate(filter, {$set: {status: 'Pending'}}, {new: true}, (err)=>{
         if(err){
             console.log(err)

@@ -19,7 +19,6 @@
                     <div class="transaction mt-4 overflow-x-auto ">
                         <div class="myhistory1">
                             <div class="row myhistory text-center py-2 border border-1 rounded-1 border-secondary-subtle bg-warning bg-opacity-10">
-                                <div class="col">Trans. ID</div>
                                 <div class="col">Amount</div>
                                 <div class="col">Currency</div>
                                 <div class="col">Status</div>
@@ -31,7 +30,6 @@
                                     <div class="container-fluid">
                                         <% deposits.forEach(deposit =>{ %>
                                             <div class="row text-center w-100 py-1">
-                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.transactID %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"> 
@@ -98,7 +96,6 @@
             withdrawal.classList.remove('history')
             withdrawal.classList.add('history-none')
             myhistory.innerHTML = `
-            <div class="col">Trans. ID</div>
             <div class="col">Amount</div>
             <div class="col">Currency</div>
             <div class="col">Status</div>
@@ -108,7 +105,6 @@
                                     <div class="container-fluid">
                                         <% deposits.forEach(deposit =>{ %>
                                             <div class="row text-center w-100 py-1">
-                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.transactID %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
                                                 <div class="col text-nowrap overflow-x-auto"> 

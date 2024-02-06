@@ -74,7 +74,6 @@
                             <div class="myhistory1">
                                 <div class="row myhistory text-center py-2 border border-1 rounded-1 border-secondary-subtle">
                                     <div class="col">Username</div>
-                                    <div class="col">Trans.ID</div>
                                     <div class="col">Currency</div>
                                     <div class="col">Amount</div>
                                     <div class="col">Confrim</div>
@@ -87,10 +86,9 @@
                                                 <form action="/confirm/deposit" method="post">
                                                     <div class="row text-center w-100 py-1">
                                                         <div class="col text-nowrap overflow-x-auto"><b><%= pendDeposit.username %> </b></div>
-                                                        <div class="col text-nowrap overflow-x-auto"><b><%= pendDeposit.transactID %> </b></div>
-                                                        <input type="text" class="d-none" value="<%= pendDeposit.transactID %>" readonly name="transactID">
+                                                        <input type="text" class="d-none" value="<%= pendDeposit.id %>" readonly name="id">
                                                         <div class="col text-nowrap overflow-x-auto"><b><%= pendDeposit.coin %> </b></div>
-                                                        <div class="col text-nowrap overflow-x-auto"><b><%= pendDeposit.amount %> </b></div>
+                                                        <div class="col text-nowrap overflow-x-auto"><b>$<%= pendDeposit.amount %> </b></div>
                                                         <div class="col text-nowrap overflow-x-auto"><button class="btn btn-warning px-2 py-0 fw-bold" type="submit"><i class="ri-check-double-line"></i></button></b></div>
                                                     </div>
                                                 </form>
@@ -115,7 +113,6 @@
                                 <div class="myhistory1">
                                     <div class="row myhistory text-center py-2 border border-1 rounded-1 border-secondary-subtle">
                                         <div class="col">Username</div>
-                                        <div class="col">Trans.ID</div>
                                         <div class="col">Currency</div>
                                         <div class="col">Amount</div>
                                         <div class="col">Unconfrim</div>
@@ -128,10 +125,9 @@
                                                     <form action="/unconfirm/deposit" method="post">
                                                         <div class="row text-center w-100 py-1">
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= confirmDeposit.username %> </b></div>
-                                                            <div class="col text-nowrap overflow-x-auto"><b><%= confirmDeposit.transactID %> </b></div>
-                                                            <input type="text" class="d-none" value="<%= confirmDeposit.transactID %>" readonly name="transactID">
+                                                            <input type="text" class="d-none" value="<%= confirmDeposit.id %>" readonly name="id">
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= confirmDeposit.coin %> </b></div>
-                                                            <div class="col text-nowrap overflow-x-auto"><b><%= confirmDeposit.amount %> </b></div>
+                                                            <div class="col text-nowrap overflow-x-auto"><b>$<%= confirmDeposit.amount %> </b></div>
                                                             <div class="col text-nowrap overflow-x-auto"><button class="btn btn-warning px-2 py-0 fw-bold" type="submit"><i class="ri-close-line"></i></button></b></div>
                                                         </div>
                                                     </form>
@@ -172,7 +168,7 @@
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= pendingWithdrawal.address %> </b></div>
                                                             <input type="text" class="d-none" value="<%= pendingWithdrawal.id %>" readonly name="id">
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= pendingWithdrawal.coin %> </b></div>
-                                                            <div class="col text-nowrap overflow-x-auto"><b><%= pendingWithdrawal.amount %> </b></div>
+                                                            <div class="col text-nowrap overflow-x-auto"><b>$<%= pendingWithdrawal.amount %> </b></div>
                                                             <div class="col text-nowrap overflow-x-auto"><button class="btn btn-warning px-2 py-0 fw-bold" type="submit"><i class="ri-check-double-line"></i></button></div>
                                                         </div>
                                                     </form>
@@ -213,7 +209,7 @@
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= confirmWithdrawal.address %> </b></div>
                                                             <input type="text" class="d-none" value="<%= confirmWithdrawal.id %>" readonly name="id">
                                                             <div class="col text-nowrap overflow-x-auto"><b><%= confirmWithdrawal.coin %> </b></div>
-                                                            <div class="col text-nowrap overflow-x-auto"><b><%= confirmWithdrawal.amount %> </b></div>
+                                                            <div class="col text-nowrap overflow-x-auto"><b>$<%= confirmWithdrawal.amount %> </b></div>
                                                             <div class="col text-nowrap overflow-x-auto"><button class="btn btn-warning px-2 py-0 fw-bold" type="submit"><i class="ri-close-line"></i></button></div>
                                                         </div>
                                                     </form>
