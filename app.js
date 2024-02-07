@@ -429,7 +429,7 @@ app.post('/withdraw',async(req,res)=>{
     res.redirect('/withdraw')
   } else{
     withdraw()
-    req.flash('success', 'Withdrawal Successful')
+    req.flash('success', 'Withdrawal Request Sent, Please Contact the Support Team For Processing More Information')
     res.redirect('/dashboard/withdraw')
   }  
 
