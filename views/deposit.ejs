@@ -24,7 +24,13 @@
                                         <div class="my-auto">
                                             <div class="mb-4">
                                                 <p class="fw-semibold mb-0">Total Deposit</p>
-                                                <p class="fw-bold fs-3">$ <%= user1.deposit %>.00</p>
+                                                <p class="fw-bold fs-3">
+                                                    <% if (Number.isInteger(user1.deposit)){ %>
+                                                        $<span><%= user1.deposit %>.00</span>
+                                                    <% } else{ %>
+                                                        $<span><%= user1.deposit %></span>
+                                                    <% } %>
+                                                </p>
                                                 <input type="text" value="<%= user.username %>" class="d-none" name="username">
                                             </div>
                                             <div class="mb-3">

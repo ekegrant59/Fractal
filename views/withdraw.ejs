@@ -22,19 +22,43 @@
                                     <div class="row font-lato">
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Account Balance</p>
-                                            <p class="fw-bold fs-2 mb-3 color1">$ <%= user1.balance %>.00</p>
+                                            <p class="fw-bold fs-2 mb-3 color1">
+                                                <% if (Number.isInteger(user1.balance)){ %>
+                                                    $<span><%= user1.balance %>.00</span>
+                                                <% } else{ %>
+                                                    $<span><%= user1.balance %></span>
+                                                <% } %>
+                                            </p>
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Deposit</p>
-                                            <p class="fw-bold fs-2 mb-3 text-primary">$ <%= user1.deposit %>.00</p>                                          
+                                            <p class="fw-bold fs-2 mb-3 text-primary">
+                                                <% if (Number.isInteger(user1.deposit)){ %>
+                                                    $<span><%= user1.deposit %>.00</span>
+                                                <% } else{ %>
+                                                    $<span><%= user1.deposit %></span>
+                                                <% } %>
+                                            </p>                                          
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Profit</p>
-                                            <p class="fw-bold fs-2 mb-3 text-success">$ <%= user1.profit %>.00</p>                                       
+                                            <p class="fw-bold fs-2 mb-3 text-success">
+                                                <% if (Number.isInteger(user1.profit)){ %>
+                                                    $<span><%= user1.profit %>.00</span>
+                                                <% } else{ %>
+                                                    $<span><%= user1.profit %></span>
+                                                <% } %>
+                                            </p>                                       
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Bonus</p>
-                                            <p class="fw-bold fs-2 mb-3 text-info">$ <%= user1.bonus %>.00</p>                                          
+                                            <p class="fw-bold fs-2 mb-3 text-info">
+                                                <% if (Number.isInteger(user1.bonus)){ %>
+                                                    $<span><%= user1.bonus %>.00</span>
+                                                <% } else{ %>
+                                                    $<span><%= user1.bonus %></span>
+                                                <% } %>
+                                            </p>                                          
                                         </div>
                                     </div>
                                 </div>
