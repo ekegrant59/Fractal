@@ -40,6 +40,10 @@
                                                     <option value="BTC">Bitcoin</option>
                                                     <option value="ETH">Ethereum</option>
                                                     <option value="BNB">BNB Smart Chain</option>
+                                                    <option value="BNB1">BNB Beacon Chain</option>
+                                                    <option value="INJ">Injective (INJ)</option>
+                                                    <option value="LTC">Litecoin (LTC)</option>
+                                                    <option value="DOGE">Dogecoin (DOGE)</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3 ">
@@ -143,12 +147,48 @@
                 copy.innerHTML = 'COPY'
             } else if (selected == 'BNB'){
                 address.innerHTML = `
-                        <p class="fw-bold fs-5">BNB Address</p>
+                        <p class="fw-bold fs-5">BNB Smart Chain Address</p>
                                             <div class="mb-3">
                                                 <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
                 ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'BNB1'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">BNB Beacon Chain Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/BNB1.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'bnb1xdd3f2r0cen3mw0ng4zhf5xr93vc7ly75cu60c'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'INJ'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Injective (INJ) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/INJ.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'inj17v3caat52h62jym5j26r5jkqxgyne6q76zk38r'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'LTC'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Litecoin (LTC) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/LTC.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'ltc1q2jk9vm4slt8gzhwrhsm88zupf7tw8aercv9xvur'
+                copy.innerHTML = 'COPY'
+            }else if (selected == 'DOGE'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Dogecoin (DOGE) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/DOGE.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'DH6ngr8PgufZRt2yz3cUdohmdELDH6D97q'
                 copy.innerHTML = 'COPY'
             }
         })

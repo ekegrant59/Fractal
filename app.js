@@ -316,7 +316,8 @@ app.get('/dashboard', protectRoute, async (req,res)=>{
       const username = theuser.username
       const deposits = await depositSchema.find({username: username})
       const withdrawals = await withdrawSchema.find({username: username})
-      res.render('dashboard', {user: theuser, user1: theuser1, deposits: deposits, withdrawals: withdrawals})
+      const referrals = await userschema.find({referrer:username})
+      res.render('dashboard', {user: theuser, user1: theuser1, deposits: deposits, withdrawals: withdrawals, referrals: referrals})
   } catch(err){
       console.log(err)
   }
@@ -456,9 +457,15 @@ app.get('/logout', (req,res)=>{
    return res.redirect('/login')
 })
 
-app.get('/adminregister', (req,res)=>{
-      res.render('adminregister')
-  })
+app.get('/invite/:id', (req,res)=>{
+    let refferer = req.params.id
+
+    res.render('reffered', {referrer: refferer})
+})
+
+// app.get('/adminregister', (req,res)=>{
+//       res.render('adminregister')
+//   })
   
   app.post('/adminregister', async(req,res)=>{
         const regInfo = req.body

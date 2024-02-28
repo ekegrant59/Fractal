@@ -23,7 +23,13 @@
                     <div class="d-flex justify-content-between pt-2">
                         <div>
                             <p class="fw-bold mb-0">Available Balance</p>
-                            <p class="fs-1 fw-bold mb-0 color1">$ <span><%= user1.balance %>.00</span></p>
+                            <p class="fs-1 fw-bold mb-0 color1">
+                                <% if (Number.isInteger(user1.balance)){ %>
+                                    $<span><%= user1.balance %>.00</span>
+                                <% } else{ %>
+                                    $<span><%= user1.balance %></span>
+                                <% } %>
+                            </p>
                         </div>
     
                         <div class="d-flex justify-content-between align-items-center">
@@ -31,7 +37,6 @@
                             <p class="mb-0 mx-2"><a href="/dashboard/withdraw" class="btn btn3 font-poppins">Withdraw</a></p>
                         </div>
                     </div>
-                    <p class="fw-bold fs-6 mb-0 ps-1"><span>0</span> BTC</p>
                 </div>
                 <div class="container-fluid my-3 px-4">
                     <div class="row gx-3 gy-3">
@@ -41,7 +46,14 @@
                                     <i class="fa-solid fa-sack-dollar"></i>
                                 </div>
                                 <p class="mb-0">Total Deposit</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">$ <%= user1.deposit %>.00</p>
+                                <p class="fw-bold fs-4 mb-0 pb-1">
+                                    <% if (Number.isInteger(user1.deposit)){ %>
+                                        $<span><%= user1.deposit %>.00</span>
+                                    <% } else{ %>
+                                        $<span><%= user1.deposit %></span>
+                                    <% } %>
+                                </p>
+                                    
 
                             </div>
                         </div>
@@ -51,7 +63,13 @@
                                     <i class="fa-solid fa-dollar-sign"></i>
                                 </div>
                                 <p class="mb-0">Total Profit</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">$ <%= user1.profit %>.00</p>
+                                <p class="fw-bold fs-4 mb-0 pb-1">
+                                    <% if (Number.isInteger(user1.profit)){ %>
+                                        $<span><%= user1.profit %>.00</span>
+                                    <% } else{ %>
+                                        $<span><%= user1.profit %></span>
+                                    <% } %>
+                                </p>
 
                             </div>
                         </div>
@@ -61,7 +79,13 @@
                                     <i class="fa-solid fa-coins"></i>
                                 </div>
                                 <p class="mb-0">Total Withdrawal</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">$ <%= user1.withdrawal %>.00</p>
+                                <p class="fw-bold fs-4 mb-0 pb-1">
+                                    <% if (Number.isInteger(user1.withdrawal)){ %>
+                                        $<span><%= user1.withdrawal %>.00</span>
+                                    <% } else{ %>
+                                        $<span><%= user1.withdrawal %></span>
+                                    <% } %>
+                                </p>
 
                             </div>
                         </div>
@@ -71,7 +95,13 @@
                                     <i class="fa-solid fa-gift"></i>
                                 </div>
                                 <p class="mb-0">Referall Bonus</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">$ <%= user1.bonus %>.00</p>
+                                <p class="fw-bold fs-4 mb-0 pb-1">
+                                    <% if (Number.isInteger(user1.bonus)){ %>
+                                        $<span><%= user1.bonus %>.00</span>
+                                    <% } else{ %>
+                                        $<span><%= user1.bonus %></span>
+                                    <% } %>
+                                </p>
 
                             </div>
                         </div>
@@ -192,6 +222,7 @@
                                         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem;">
                                 COPY
                                 </button>
+                                <p class="fw-semibold mb-0 pt-2">You have <%= referrals.length %> referrals  </p>
                             </div>
                         </div>
                     </div>
