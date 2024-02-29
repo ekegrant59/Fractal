@@ -30,3 +30,8 @@ footer img{
 .myhistory4{
     width: 270%;
 }
+
+.bot{
+    height: 65vh;
+    overflow-y: auto;
+}

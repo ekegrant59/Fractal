@@ -10,7 +10,9 @@ const balanceSchema = new mongoose.Schema({
     deposit: Number,
     bonus: Number,
     withdrawal: Number,
-    profit: Number
+    profit: Number,
+    bot: Boolean,
+    botID: Number
 })
 
 module.exports = mongoose.model('balance', balanceSchema)

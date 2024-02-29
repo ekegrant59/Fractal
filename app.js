@@ -11,6 +11,8 @@ const userschema = require('./schema/userSchema')
 const balanceSchema = require('./schema/balanceSchema')
 const depositSchema = require('./schema/depositSchema')
 const withdrawSchema = require('./schema/withdrawSchema')
+const botSchema = require('./schema/botSchema')
+
 
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
@@ -246,7 +248,8 @@ app.post('/signup', async (req,res)=>{
               deposit: 0.00,
               withdrawal: 0.00,
               bonus: 0.00,
-              profit:0.00
+              profit:0.00,
+              bot: false
           })
           await balance.save()
 
@@ -364,6 +367,19 @@ app.get('/dashboard/withdraw', protectRoute, async (req,res)=>{
     const theuser = await userschema.findOne({email: auser})
     const theuser1 = await balanceSchema.findOne({email: auser})
     res.render('withdraw', {user: theuser, user1: theuser1})
+} catch(err){
+    console.log(err)
+}
+})
+
+app.get('/dashboard/trade', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    const username = theuser1.username
+    const botTxns = await botSchema.find({username: username})
+    res.render('trade', {user: theuser, user1: theuser1, botTxns: botTxns})
 } catch(err){
     console.log(err)
 }
@@ -688,6 +704,190 @@ app.post('/delete/user', async (req,res)=>{
     res.redirect('/admin')
 })
 
+app.post('/startBot', async (req,res)=>{
+    const details = req.body
+    const username = details.username
+    const filter = {username:username}
+    const user = await balanceSchema.findOne(filter)
+
+    if(user){
+        let balance = user.balance
+        let deposit = user.deposit
+        let bot = user.bot
+        let botID
+
+        if(balance > 0 && deposit >0 && !(bot)){
+            balanceSchema.findOneAndUpdate(filter, {$set: {bot: true}}, {new: true}, (err)=>{
+                if(err){
+                    console.log(err)
+                }
+            })
+            // setTimeout(() => { 
+            //     botTnx(username);
+            //     console.log(`Bot started for ${username}`)
+            //    }, 1000 * 60 * 10); 
+
+            botTnx(username)
+            req.flash('success', `Bot started for ${username}`)
+            res.redirect('/admin')
+
+            botID = setInterval(() => { 
+                botTnx(username);
+                console.log(`Bot started again for ${username}`)
+               }, 1000 * 60 * 60 * 24); 
+
+            // console.log(botID[Symbol.toPrimitive]())
+            let botID2 = botID[Symbol.toPrimitive]()
+            balanceSchema.findOneAndUpdate(filter, {$set: {botID: botID2}}, {new: true}, (err)=>{
+                if(err){
+                    console.log(err)
+                } else{
+                    console.log(`BotID updated for ${username}`)
+                }
+            })
+          } else if (balance > 0 && deposit >0 && bot){
+            req.flash('success', `Bot Active for ${username}`)
+            console.log(`Bot Active for ${username}`)
+            res.redirect('/admin')
+          } else{
+            console.log(`Insufficient balance for ${username}`)
+            req.flash('danger', `Insufficient balance for ${username}`)
+            res.redirect('/admin')
+          }
+
+    } else{
+        req.flash('danger', 'User Not Found, Please try again')
+        // console.log('User not found')
+        res.redirect('/admin')
+    }
+    
+})
+app.post('/endBot', async (req,res)=>{
+    let details = req.body
+    let username = details.username
+    const filter = {username:username}
+    let theuser = await balanceSchema.findOne({username:username})
+    let botIntervalID = theuser.botID
+    // console.log(botIntervalID)
+    clearInterval(botIntervalID)
+    balanceSchema.findOneAndUpdate(filter, {$set: {bot: false}}, {new: true}, (err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+    req.flash('success', `Bot Stopped for ${username}`)
+    res.redirect('/admin')
+})
+
+async function botTnx(username){
+    let tradesCount = 0;
+    while ( tradesCount < 6) {
+        try {
+            let theuser = await balanceSchema.findOne({username:username})
+            let balance = theuser.balance
+            let profit = theuser.profit
+            let newBalance, newProfit
+            const btcPrice = await getBTCPriceWithRetry()
+            const currentDate = new Date();
+            const formattedDateTime = currentDate.toLocaleString();
+            // generateAmount(email)
+            const amount = await generateAmount(username)
+            if(btcPrice != null){
+                console.log(`BTC Price: ${btcPrice}`)
+                console.log(`Bot started for ${username}`)
+                console.log(`Time: ${formattedDateTime}`)
+                console.log(`Amount : ${amount}`)
+
+                const isBuyTransaction = Math.random() < 0.5;
+                const isLossTransaction = Math.random() < 0.13;
+                const txnDurationRatio = Math.random()
+
+                let transactionType = isBuyTransaction ? 'buy' : 'sell'
+                let isLoss = isLossTransaction ? true : false
+
+                const bot = new botSchema({
+                    username: username,
+                    btcPrice: btcPrice,
+                    time: formattedDateTime,
+                    amount: amount,
+                    type: transactionType,
+                    loss: isLoss
+                })
+                await bot.save()
+
+                if (isLoss){
+                    newBalance = balance - parseFloat(amount)
+                    newProfit = profit - parseFloat(amount)
+                    newBalance = newBalance.toFixed(2)
+                    newProfit = newProfit.toFixed(2)
+                } else{
+                    newBalance = balance + parseFloat(amount)
+                    newProfit = profit + parseFloat(amount)
+                    newBalance = newBalance.toFixed(2)
+                    newProfit = newProfit.toFixed(2)
+                }
+
+                balanceSchema.findOneAndUpdate({username:username}, {$set: {balance: newBalance, profit: newProfit}}, {new: true}, (err,dets)=>{
+                    if (err){
+                        console.log(err)
+                    }
+                })
+
+                // console.log(transactionType)
+                // console.log(isLoss)
+                tradesCount++
+                await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 60 * 4 * txnDurationRatio));
+            } else{
+                console.log("Failed to fetch BTC price. Skipping transaction.");
+            }
+        } catch (error) {
+            console.error('Error in bot:', error);
+        }
+    }
+    console.log("Maximum number of trades reached for the day.");
+  }
+
+  async function getBTCPriceWithRetry(maxRetries = 3) {
+    let retries = 0;
+
+    while (retries < maxRetries) {
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+            const data = await response.json();
+            
+            // Extract the BTC price from the response
+            const btcPrice = data.bitcoin.usd;
+            
+            return btcPrice;
+        } catch (error) {
+            console.error('Error fetching BTC price:', error);
+
+            // Increment the retry count
+            retries++;
+
+            // Add a delay before retrying (adjust as needed)
+            await new Promise(resolve => setTimeout(resolve, 10000));
+        }
+    }
+    // If max retries reached without success, return null or throw an error
+    console.error(`Failed to fetch BTC price after ${maxRetries} retries.`);
+    return null;
+  }
+
+  async function generateAmount(username){
+    let theuser = await balanceSchema.findOne({username:username})
+    let deposit = theuser.deposit
+    // console.log(theuser)
+    let twoPercent = deposit * 0.03;
+
+    function getRandomNumber() {
+        return Math.random();
+    }
+
+    const randomValue = getRandomNumber() * twoPercent;
+    return randomValue.toFixed(2)
+  }
+  
 
 const port = process.env.PORT || 3000
 

@@ -284,3 +284,8 @@ footer a:hover{
         width: 150%;
     }
 }
+
+.bot{
+    max-height: 85vh;
+    overflow-y: auto;
+}
