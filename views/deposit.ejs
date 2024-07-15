@@ -50,6 +50,7 @@
                                                     <option value="INJ">Injective (INJ)</option>
                                                     <option value="LTC">Litecoin (LTC)</option>
                                                     <option value="DOGE">Dogecoin (DOGE)</option>
+                                                    <option value="SOL">Solana (SOL)</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3 ">
@@ -128,10 +129,10 @@
                 address.innerHTML = `
                         <p class="fw-bold fs-5">USDT (TRC-20) Address</p>
                                             <div class="mb-3">
-                                                <img src="/assets/img/tron.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                <img src="/assets/img/tron.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = 'TSJ91pv88Vx4d3ueDKZ9CgBuFKENRN3BQP'
+                ref.value = 'TNcRYXfoy2JC2BuD7QecSDEY1MquhWLhy8'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'BTC'){
                 address.innerHTML = `
@@ -195,6 +196,15 @@
                                             </div>
                 `
                 ref.value = 'DH6ngr8PgufZRt2yz3cUdohmdELDH6D97q'
+                copy.innerHTML = 'COPY'
+            }else if (selected == 'SOL'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Solana (SOL) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/SOL.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'DWkTT6BMpo9YaUxt5uXs89j6NS1JyCpN41FnYpUMPTii'
                 copy.innerHTML = 'COPY'
             }
         })
