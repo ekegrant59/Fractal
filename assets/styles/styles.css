@@ -438,6 +438,7 @@ footer a:hover{
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
     backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1040; /* Behind the sidebar */
     display: none; /* Hidden by default */
     transition: opacity 0.2s ease-in-out;
