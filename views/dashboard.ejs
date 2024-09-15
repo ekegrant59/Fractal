@@ -8,228 +8,199 @@
 </head>
 <body>
     <%- include('partials/usernav') %>
-    <%- include('partials/tradingview') %>
-     <main class="px-md-5" data-bs-theme="dark">
-        
-        <div class="px-xl-5 pt-4">
-            <div class="px-xl-5 px-3">
-                <div class="rounded-4">
+     <main class="ps-4 ps-md-5 pe-4 px-lg-5 content" data-bs-theme="dark" >
+
+        <div class="ps-md-2 ">
+            <div class="d-md-flex pb-4 justify-content-between align-items-center">
+                <div>
+                    <p class="fs-2 pt-3 mb-0">Good <span id="timeofday">Morning</span>, <b class="text-capitalize"><%= user.firstName %> <%= user.lastName %></b></p>
+                    <p class="fs-6 fw-light">Glad to see you again!</p>
+                </div>
+                <div class="">
+                    <p class="fs-6 fw-light mb-0 pb-0 text-end">Available Balance</p>
+                    <p class="fs-1 mb-0 fw-bold lh-1 text-end "><span class="color1">$</span><span id="userbalance"><%= user1.balance %></span>
+                    </p>
                     
                 </div>
-                <div class="px-md-4 px-3 py-3 mt-4 rounded-3 text-light bg-secondary bg-opacity-25" >
-                    
-                    <p class="fs-6 mb-0 font-poppins" style="font-weight: 500;">Glad to see you again! , <span class="fw-bold color1"><%= user.firstName %></span></p>
-                    
-                    <div class="d-flex justify-content-between pt-2">
-                        <div>
-                            <p class="fw-bold mb-0">Available Balance</p>
-                            <p class="fs-1 fw-bold mb-0 color1">
-                                <% if (Number.isInteger(user1.balance)){ %>
-                                    $<span><%= user1.balance %>.00</span>
-                                <% } else{ %>
-                                    $<span><%= user1.balance %></span>
-                                <% } %>
-                            </p>
-                        </div>
-    
-                        <div class="d-flex justify-content-between align-items-center overflow-x-auto ms-3">
-                            <p class="mb-0 mx-2"><a href="/dashboard/deposit" class="btn btn3 font-poppins">Deposit</a></p>
-                            <p class="mb-0 mx-2"><a href="/dashboard/trade" class="btn btn3 font-poppins">Trade</a></p>
-                            <p class="mb-0 mx-2"><a href="/dashboard/withdraw" class="btn btn3 font-poppins">Withdraw</a></p>                            
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid my-3 px-4">
-                    <div class="row gx-3 gy-3">
-                        <div class="col-6 col-md-3 h-100">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
-                                <div class="rounded-3 text-light bg-primary fs-5 px-3 py-1 mb-3" style="width: min-content;">
-                                    <i class="fa-solid fa-sack-dollar"></i>
-                                </div>
-                                <p class="mb-0">Total Deposit</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">
-                                    <% if (Number.isInteger(user1.deposit)){ %>
-                                        $<span><%= user1.deposit %>.00</span>
-                                    <% } else{ %>
-                                        $<span><%= user1.deposit %></span>
-                                    <% } %>
-                                </p>
-                                    
+            </div>
 
+            <div class="container-fluid my-3 px-0">
+                <div class="row gx-4 gy-5">
+                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                        <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
+                            <div class="rounded-3 text-light bg-primary icon-amount fs-3 px-3 py-1" style="width: min-content;">
+                                <i class="fa-solid fa-sack-dollar"></i>
                             </div>
-                        </div>
-                        <div class="col-6 col-md-3 h-100">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
-                                <div class="rounded-3 text-light bg-success fs-5 px-3 py-1 mb-3" style="width: min-content;">
-                                    <i class="fa-solid fa-dollar-sign"></i>
-                                </div>
-                                <p class="mb-0">Total Profit</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">
-                                    <% if (Number.isInteger(user1.profit)){ %>
-                                        $<span><%= user1.profit %>.00</span>
-                                    <% } else{ %>
-                                        $<span><%= user1.profit %></span>
-                                    <% } %>
+                            <div class="pb-2 pb-sm-3">
+                                <p class="mb-0 fs-6 pt-3 pt-sm-1 text-end fw-light mb-0">Total Deposit</p>
+                                <p class="fw-bold lh-1 text-end fs-2 mb-0 pb-1"><span class="color1">$</span><span id="userdeposit"><%= user1.deposit %></span>
                                 </p>
-
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3 h-100">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
-                                <div class="rounded-3 text-light bg-danger fs-5 px-3 py-1 mb-3" style="width: min-content;">
-                                    <i class="fa-solid fa-coins"></i>
-                                </div>
-                                <p class="mb-0">Total Withdrawal</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">
-                                    <% if (Number.isInteger(user1.withdrawal)){ %>
-                                        $<span><%= user1.withdrawal %>.00</span>
-                                    <% } else{ %>
-                                        $<span><%= user1.withdrawal %></span>
-                                    <% } %>
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3 h-100">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
-                                <div class="rounded-3 text-light bg-info fs-5 px-3 py-1 mb-3" style="width: min-content;">
-                                    <i class="fa-solid fa-gift"></i>
-                                </div>
-                                <p class="mb-0">Referall Bonus</p>
-                                <p class="fw-bold fs-4 mb-0 pb-1">
-                                    <% if (Number.isInteger(user1.bonus)){ %>
-                                        $<span><%= user1.bonus %>.00</span>
-                                    <% } else{ %>
-                                        $<span><%= user1.bonus %></span>
-                                    <% } %>
-                                </p>
-
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-fluid my-5 px-0">
-                    <div class="row gy-5 gx-3">
-                        <div class="col-12 col-lg-8">
-                            <div class="w-90 ms-0 h-100 bg-secondary text-light bg-opacity-25 rounded-3 px-4 pt-3">
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-semibold fs-5">Chart Overview</p>
-                                    <p class="bg-light text-dark rounded-pill px-3 py-1">#BTCUSD</p>
-                                </div>
-                                <div style="height: 500px;">
-                                    <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container" style="height:100%;width:100%">
-    <div class="tradingview-widget-container__widget" style="height:calc(100% - 20px);width:100%"></div>
-    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-    {
-    "autosize": true,
-    "symbol": "BITSTAMP:BTCUSD",
-    "interval": "D",
-    "timezone": "Etc/UTC",
-    "theme": "dark",
-    "style": "1",
-    "locale": "en",
-    "enable_publishing": false,
-    "allow_symbol_change": true,
-    "support_host": "https://www.tradingview.com"
-  }
-    </script>
-  </div>
-  <!-- TradingView Widget END -->
-                                </div>
+                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                        <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
+                            <div class="rounded-3 text-light bg-success icon-amount fs-3 px-3 py-1" style="width: min-content;">
+                                <i class="fa-solid fa-dollar-sign"></i>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 pt-3">
-                                <p class="fw-semibold fs-5">Latest Updates</p>
-                                <div style="height: 500px;">
-                                    <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-    {
-    "feedMode": "all_symbols",
-    "isTransparent": false,
-    "displayMode": "regular",
-    "width": "100%",
-    "height": "100%",
-    "colorTheme": "dark",
-    "locale": "en"
-  }
-    </script>
-  </div>
-  <!-- TradingView Widget END -->
-                                </div>
+                            <div class="pb-2 pb-sm-3">
+                                <p class="mb-0 fs-6 pt-3 pt-sm-1 text-end fw-light mb-0">Total Profit</p>
+                                <p class="fw-bold lh-1 text-end fs-2 mb-0 pb-1"><span class="color1">$</span><span id="userprofit"><%= user1.profit %></span>
+                                </p>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="container-fluid pb-5 px-0">
-                    <div class="row gx-3 gy-5">
-                        <div class="col-12 col-lg-8">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-4 py-3">
-                                <p class="fs-5 fw-bold">Recent Transactions</p>
-                                <div>
-                                    <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
-                                    <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
-                                    <div class="transaction mt-4 py-2 overflow-x-auto">
-                                        <div class="myhistory1 text-center">
-                                            <div class="row myhistory text-center border border-1 rounded-1 border-secondary-subtle">
-                                                <div class="col">Amount</div>
-                                                <div class="col">Status</div>
-                                                <div class="col">Currency</div>
-                                                <div class="col">Date</div>
-                                            </div>
-                                            <div class="thehistory py-2">
-                                                <% if (deposits.length > 0) { %>
-                                                    <div class="container-fluid">
-                                                        <% deposits.forEach(deposit =>{ %>
-                                                            <div class="row text-center w-100 py-1">
-                                                                <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
-                                                                <div class="col text-nowrap overflow-x-auto"> 
-                                                                    <% if (deposit.status == 'Pending'){%>
-                                                                        <b class="text-warning"><%= deposit.status %> </b>
-                                                                    <% }else{ %>
-                                                                        <b class="text-success"><%= deposit.status %> </b>
-                                                                    <% } %>
-                                                                </div>
-                                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
-                                                                
-                                                                <div class="col text-nowrap overflow-x-auto"><b><%= deposit.date %> </b></div>
-                                                            </div>
-                                                        <% }) %> 
-                                                    </div>
-                                                <% } else { %>
-                                                    <div class="text-center">
-                                                        <p class="mb-0">No Transactions found.....</p>
-                                                    </div>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/dashboard/history" class="btn btn-outline-warning px-3 py-1">View All</a>
+                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                        <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
+                            <div class="rounded-3 text-light bg-danger icon-amount fs-3 px-3 py-1" style="width: min-content;">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <div class="pb-2 pb-sm-3">
+                                <p class="mb-0 fs-6 pt-3 pt-sm-1 text-end fw-light mb-0">Total Withdrawal</p>
+                                <p class="fw-bold lh-1 text-end fs-2 mb-0 pb-1">
+                                    <span class="color1">$</span><span id="userwithdrawal"><%= user1.withdrawal %></span>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="w-90 mx-auto bg-secondary bg-opacity-25 rounded-3 px-3 py-3">
-                                <p class="fs-5 fw-bold">Refer Friends to Earn Commisions</p>
-                                <p class="fw-light">Increase your commissions by inviting your friends to make deposits.</p>
-                                <p><input class="form-control ref" type="text" value="https://fractalequities.com/invite/<%= user.username %>" aria-label="readonly input example" readonly></p>
-                                <button type="button" class="btn btn-warning copy"
-                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem;">
-                                COPY
-                                </button>
-                                <p class="fw-semibold mb-0 pt-2">You have <%= referrals.length %> referrals  </p>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                        <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
+                            <div class="rounded-3 text-light bg-info icon-amount fs-3 px-3 py-1" style="width: min-content;">
+                                <i class="fa-solid fa-gift"></i>
+                            </div>
+                            <div class="pb-2 pb-sm-3">
+                                <p class="mb-0 fs-6 pt-3 pt-sm-1 text-end fw-light mb-0">Referral Bonus</p>
+                                <p class="fw-bold lh-1 text-end fs-2 mb-0 pb-1">
+                                    <span class="color1">$</span><span id="userbonus"><%= user1.bonus %></span>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="container-fluid my-5 px-0">
+                <div class="row gy-5 gx-3">
+                    <div class="col-12 col-lg-8">
+                        <div class="w-90 ms-0 h-100 bg-amount text-light bg-opacity-25 rounded-3 px-4 pt-3">
+                            <div class="d-flex justify-content-between">
+                                <p class="fw-semibold fs-5">Chart Overview</p>
+                                <p class="bg-light text-dark rounded-pill px-3 py-1">#BTCUSD</p>
+                            </div>
+                            <div style="height: 500px;">
+                                <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container" style="height:100%;width:100%">
+<div class="tradingview-widget-container__widget" style="height:calc(100% - 20px);width:100%"></div>
+<div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+{
+"autosize": true,
+"symbol": "BITSTAMP:BTCUSD",
+"interval": "D",
+"timezone": "Etc/UTC",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"enable_publishing": false,
+"allow_symbol_change": true,
+"support_host": "https://www.tradingview.com"
+}
+</script>
+</div>
+<!-- TradingView Widget END -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-4 pt-3">
+                            <p class="fw-semibold fs-5">Latest Updates</p>
+                            <div style="height: 500px;">
+                                <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+{
+"feedMode": "all_symbols",
+"isTransparent": false,
+"displayMode": "regular",
+"width": "100%",
+"height": "100%",
+"colorTheme": "dark",
+"locale": "en"
+}
+</script>
+</div>
+<!-- TradingView Widget END -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid pb-5 px-0">
+                <div class="row gx-3 gy-5">
+                    <div class="col-12 col-lg-8">
+                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-4 py-3">
+                            <p class="fs-5 fw-bold">Recent Transactions</p>
+                            <div>
+                                <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
+                                <span class="px-3 py-2 history-none fw-semibold withdrawal"> <i class="fa-solid fa-circle-up px-2"></i>Withdrawals</span>
+                                <div class="transaction mt-4 py-2 overflow-x-auto">
+                                    <div class="myhistory1 text-center">
+                                        <div class="row myhistory text-center border border-1 rounded-1 border-secondary-subtle">
+                                            <div class="col">Amount</div>
+                                            <div class="col">Status</div>
+                                            <div class="col">Currency</div>
+                                            <div class="col">Date</div>
+                                        </div>
+                                        <div class="thehistory py-2">
+                                            <% if (deposits.length > 0) { %>
+                                                <div class="container-fluid">
+                                                    <% deposits.forEach(deposit =>{ %>
+                                                        <div class="row text-center w-100 py-1">
+                                                            <div class="col text-nowrap overflow-x-auto"><b>$<%= deposit.amount %> </b></div>
+                                                            <div class="col text-nowrap overflow-x-auto"> 
+                                                                <% if (deposit.status == 'Pending'){%>
+                                                                    <b class="text-warning"><%= deposit.status %> </b>
+                                                                <% }else{ %>
+                                                                    <b class="text-success"><%= deposit.status %> </b>
+                                                                <% } %>
+                                                            </div>
+                                                            <div class="col text-nowrap overflow-x-auto"><b><%= deposit.coin %> </b></div>
+                                                            
+                                                            <div class="col text-nowrap overflow-x-auto"><b><%= deposit.date %> </b></div>
+                                                        </div>
+                                                    <% }) %> 
+                                                </div>
+                                            <% } else { %>
+                                                <div class="text-center">
+                                                    <p class="mb-0">No Transactions found.....</p>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="/dashboard/history" class="btn btn-outline-warning px-3 py-1">View All</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-3 py-3">
+                            <p class="fs-5 fw-bold">Refer Friends to Earn Commisions</p>
+                            <p class="fw-light">Increase your commissions by inviting your friends to make deposits.</p>
+                            <p><input class="form-control ref" type="text" value="https://fractalequities.com/invite/<%= user.username %>" aria-label="readonly input example" readonly></p>
+                            <button type="button" class="btn btn-warning copy"
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem;">
+                            COPY
+                            </button>
+                            <p class="fw-semibold mb-0 pt-2">You have <%= referrals.length %> referrals  </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+       
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -324,6 +295,47 @@
                                 <% } %>
             `
         })
+
+    function getTimeOfDay() {
+        const now = new Date();  // Get the current date and time
+        const hours = now.getHours();  // Get the current hour (0-23)
+
+        if (hours >= 5 && hours < 12) {
+            return "Morning";     // From 5:00 AM to 11:59 AM
+        } else if (hours >= 12 && hours < 17) {
+            return "Afternoon";   // From 12:00 PM to 4:59 PM
+        } else if (hours >= 17 && hours < 21) {
+            return "Evening";     // From 5:00 PM to 8:59 PM
+        } else {
+            return "Night";       // From 9:00 PM to 4:59 AM
+        }
+    }
+
+    let timeOfDay = getTimeOfDay();
+
+    let timeday = document.getElementById('timeofday')
+    timeday.innerText = timeOfDay
+
+    function formatNumber(num) {
+        if (Number.isInteger(num)) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        } else {
+            return num.toLocaleString('en-US');
+        }
+    }
+
+    let userbalance = Number("<%= user1.balance %>")
+    let userdeposit = Number("<%= user1.deposit %>")
+    let userprofit = Number("<%= user1.profit %>")
+    let userwithdrawal = Number("<%= user1.withdrawal %>")
+    let userbonus = Number("<%= user1.bonus %>")
+
+    document.getElementById('userbalance').innerHTML = formatNumber(userbalance)
+    document.getElementById('userdeposit').innerHTML = formatNumber(userdeposit)
+    document.getElementById('userprofit').innerHTML = formatNumber(userprofit)
+    document.getElementById('userwithdrawal').innerHTML = formatNumber(userwithdrawal)
+    document.getElementById('userbonus').innerHTML = formatNumber(userbonus)
+
     </script>
 </body>
 </html>

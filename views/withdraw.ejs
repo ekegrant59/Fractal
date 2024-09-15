@@ -8,13 +8,12 @@
 </head>
 <body>
     <%- include('partials/usernav') %>
-    <%- include('partials/tradingview') %>
-     <main class="px-md-5 py-3 px-3" data-bs-theme="dark">
-        <div class="px-lg-5">
-            <div class="px-lg-5">
+     <main class="ps-4 ps-md-5 pe-4 px-lg-5 content py-3" data-bs-theme="dark">
+        <div class="">
+            <div class="">
                 <h1 class="font-poppins fw-semibold ps-4">Withdraw Funds</h1>
 
-                <div class="bg-secondary bg-opacity-25 rounded-3 my-3">
+                <div class="my-3">
                     <div class="p-4 container-fluid">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -23,41 +22,25 @@
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Account Balance</p>
                                             <p class="fw-bold fs-2 mb-3 color1">
-                                                <% if (Number.isInteger(user1.balance)){ %>
-                                                    $<span><%= user1.balance %>.00</span>
-                                                <% } else{ %>
-                                                    $<span><%= user1.balance %></span>
-                                                <% } %>
+                                                <span class="">$</span><span id="userbalance"><%= user1.balance %></span>
                                             </p>
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Deposit</p>
                                             <p class="fw-bold fs-2 mb-3 text-primary">
-                                                <% if (Number.isInteger(user1.deposit)){ %>
-                                                    $<span><%= user1.deposit %>.00</span>
-                                                <% } else{ %>
-                                                    $<span><%= user1.deposit %></span>
-                                                <% } %>
+                                                <span class="">$</span><span id="userdeposit"><%= user1.deposit %></span>
                                             </p>                                          
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Profit</p>
                                             <p class="fw-bold fs-2 mb-3 text-success">
-                                                <% if (Number.isInteger(user1.profit)){ %>
-                                                    $<span><%= user1.profit %>.00</span>
-                                                <% } else{ %>
-                                                    $<span><%= user1.profit %></span>
-                                                <% } %>
+                                                <span class="">$</span><span id="userprofit"><%= user1.profit %></span>
                                             </p>                                       
                                         </div>
                                         <div class="col-6 col-md-12">
                                             <p class="fw-semibold mb-0">Total Bonus</p>
                                             <p class="fw-bold fs-2 mb-3 text-info">
-                                                <% if (Number.isInteger(user1.bonus)){ %>
-                                                    $<span><%= user1.bonus %>.00</span>
-                                                <% } else{ %>
-                                                    $<span><%= user1.bonus %></span>
-                                                <% } %>
+                                                <span class="">$</span><span id="userbonus"><%= user1.bonus %></span>
                                             </p>                                          
                                         </div>
                                     </div>
@@ -112,5 +95,28 @@
     </main> 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        function formatNumber(num) {
+        if (Number.isInteger(num)) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        } else {
+            return num.toLocaleString('en-US');
+        }
+    }
+
+    let userbalance = Number("<%= user1.balance %>")
+    let userdeposit = Number("<%= user1.deposit %>")
+    let userprofit = Number("<%= user1.profit %>")
+    let userwithdrawal = Number("<%= user1.withdrawal %>")
+    let userbonus = Number("<%= user1.bonus %>")
+
+    document.getElementById('userbalance').innerHTML = formatNumber(userbalance)
+    document.getElementById('userdeposit').innerHTML = formatNumber(userdeposit)
+    document.getElementById('userprofit').innerHTML = formatNumber(userprofit)
+    document.getElementById('userwithdrawal').innerHTML = formatNumber(userwithdrawal)
+    document.getElementById('userbonus').innerHTML = formatNumber(userbonus)
+
+    </script>
 </body>
 </html>
