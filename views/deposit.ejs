@@ -24,11 +24,7 @@
                                             <div class="mb-4">
                                                 <p class="fw-semibold mb-0">Total Deposit</p>
                                                 <p class="fw-bold fs-3">
-                                                    <% if (Number.isInteger(user1.deposit)){ %>
-                                                        $<span><%= user1.deposit %>.00</span>
-                                                    <% } else{ %>
-                                                        $<span><%= user1.deposit %></span>
-                                                    <% } %>
+                                                    <span class="color1">$</span><span id="userdeposit"><%= user1.deposit %></span>
                                                 </p>
                                                 <input type="text" value="<%= user.username %>" class="d-none" name="username">
                                             </div>
@@ -215,6 +211,18 @@
             navigator.clipboard.writeText(ref.value)
             copy.innerHTML = 'COPIED!'
         })
+
+        let userdeposit = Number("<%= user1.deposit %>")
+
+        function formatNumber(num) {
+        if (Number.isInteger(num)) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        } else {
+            return num.toLocaleString('en-US');
+        }
+    }
+
+    document.getElementById('userdeposit').innerHTML = formatNumber(userdeposit)
     </script>
 </body>
 </html>
