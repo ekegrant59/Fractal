@@ -14,7 +14,7 @@
             <div class="d-md-flex pb-4 justify-content-between align-items-center">
                 <div>
                     <p class="fs-2 pt-3 mb-0">Good <span id="timeofday">Morning</span>, <b class="text-capitalize"><%= user.firstName %> <%= user.lastName %></b></p>
-                    <p class="fs-6 fw-light">Glad to see you again!</p>
+                    <p class="fs-6 fw-light" id="greeting">Glad to see you again!</p>
                 </div>
                 <div class="">
                     <p class="fs-6 fw-light mb-0 pb-0 text-end">Available Balance</p>
@@ -312,9 +312,19 @@
     }
 
     let timeOfDay = getTimeOfDay();
-
+    let greeting = document.getElementById('greeting')
     let timeday = document.getElementById('timeofday')
     timeday.innerText = timeOfDay
+
+    if (timeOfDay == 'Morning'){
+        greeting.innerText = 'Glad to see you again!'
+    } else if (timeOfDay == 'Afternoon'){
+        greeting.innerText = "Hope your day's going well?"
+    } else if (timeOfDay == 'Evening'){
+        greeting.innerText = "Hope you're winding down nicely."
+    }  else if (timeOfDay == 'Night'){
+        greeting.innerText = "Rest up for tomorrow!"
+    } 
 
     function formatNumber(num) {
         if (Number.isInteger(num)) {
