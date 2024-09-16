@@ -17,6 +17,7 @@ const botSchema = require('./schema/botSchema')
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
 const path = require('path')
+const userSchema = require('./schema/userSchema')
 
 
 const adminkey = process.env.ADMINKEY
@@ -366,11 +367,19 @@ app.get('/dashboard/withdraw', protectRoute, async (req,res)=>{
     const auser = req.user.user.email
     const theuser = await userschema.findOne({email: auser})
     const theuser1 = await balanceSchema.findOne({email: auser})
-    res.render('withdraw', {user: theuser, user1: theuser1})
+    res.render('withdraw', {user: theuser, user1: theuser1, formatNumber})
 } catch(err){
     console.log(err)
 }
 })
+
+function formatNumber(num) {
+    if (Number.isInteger(num)) {
+        return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } else {
+        return num.toLocaleString('en-US');
+    }
+}
 
 app.get('/dashboard/trade', protectRoute, async (req,res)=>{
   try{
@@ -379,7 +388,7 @@ app.get('/dashboard/trade', protectRoute, async (req,res)=>{
     const theuser1 = await balanceSchema.findOne({email: auser})
     const username = theuser1.username
     const botTxns = await botSchema.find({username: username})
-    res.render('trade', {user: theuser, user1: theuser1, botTxns: botTxns})
+    res.render('trade', {user: theuser, user1: theuser1, botTxns, formatNumber})
 } catch(err){
     console.log(err)
 }
@@ -466,6 +475,36 @@ app.post('/withdraw',async(req,res)=>{
       }
   }
 
+})
+
+app.post('/changepassword/:id', async (req,res)=>{
+    const {oldpassword, newpassword, confirmpassword} = req.body
+    const id = req.params.id
+
+    // console.log(`id: ${id}, oldpassword: ${oldpassword}, mewpassword:${newpassword}, confirmpasswod:${confirmpassword}`)
+
+    const user = await userSchema.findById(id)
+
+    if (user.password != oldpassword){
+        req.flash('danger', 'Incorrect Password, Please Try Again')
+        res.redirect('/dashboard/profile')
+    } else if (newpassword != confirmpassword){
+        req.flash('danger', 'Passwords do not match, Please Try Again')
+        res.redirect('/dashboard/profile')
+    } else{
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(newpassword,salt)
+        userSchema.findByIdAndUpdate(id, {$set: {password: newpassword, encryptedpassword: hashedPassword}}, {new: true}, (err,dets)=>{
+            if (err){
+                console.log(err)
+                req.flash('danger', 'An Error Occured, Please try again')
+                res.redirect('/dashboard/profile')
+            } else{
+                req.flash('success', 'Password Updated Successfully')
+                res.redirect('/dashboard/profile')
+            }
+        })
+    }
 })
 
 app.get('/logout', (req,res)=>{
@@ -746,10 +785,44 @@ app.post('/startBot', async (req,res)=>{
                 }
             })
           } else if (balance > 0 && deposit >0 && bot){
-            req.flash('success', `Bot Active for ${username}`)
-            console.log(`Bot Active for ${username}`)
+            let theuser = await balanceSchema.findOne({username:username})
+            let botIntervalID = theuser.botID
+            // console.log(botIntervalID)
+            clearInterval(botIntervalID)
+            balanceSchema.findOneAndUpdate(filter, {$set: {bot: false}}, {new: true}, (err)=>{
+                if(err){
+                    console.log(err)
+                }
+            })
+
+            balanceSchema.findOneAndUpdate(filter, {$set: {bot: true}}, {new: true}, (err)=>{
+                if(err){
+                    console.log(err)
+                }
+            })
+
+            botTnx(username)
+
+            console.log(`Bot stopped and started for ${username}`)
+
+            req.flash('success', `Bot Started Again for ${username}`)
             res.redirect('/admin')
-          } else{
+
+            botID = setInterval(() => { 
+                botTnx(username);
+                console.log(`Bot started again for ${username}`)
+               }, 1000 * 60 * 60 * 24); 
+
+            // console.log(botID[Symbol.toPrimitive]())
+            let botID2 = botID[Symbol.toPrimitive]()
+            balanceSchema.findOneAndUpdate(filter, {$set: {botID: botID2}}, {new: true}, (err)=>{
+                if(err){
+                    console.log(err)
+                } else{
+                    console.log(`BotID updated for ${username}`)
+                }
+            })           
+          } else {
             console.log(`Insufficient balance for ${username}`)
             req.flash('danger', `Insufficient balance for ${username}`)
             res.redirect('/admin')
@@ -878,7 +951,7 @@ async function botTnx(username){
     let theuser = await balanceSchema.findOne({username:username})
     let deposit = theuser.deposit
     // console.log(theuser)
-    let twoPercent = deposit * 0.03;
+    let twoPercent = deposit * 0.1;
 
     function getRandomNumber() {
         return Math.random();

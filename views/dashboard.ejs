@@ -8,7 +8,7 @@
 </head>
 <body>
     <%- include('partials/usernav') %>
-     <main class="ps-4 ps-md-5 pe-4 px-lg-5 content" data-bs-theme="dark" >
+     <main class="ps-4 ps-md-5 pe-4 px-xl-5 content" data-bs-theme="dark" >
 
         <div class="ps-md-2 ">
             <div class="d-md-flex pb-4 justify-content-between align-items-center">
@@ -25,8 +25,8 @@
             </div>
 
             <div class="container-fluid my-3 px-0">
-                <div class="row gx-4 gy-5">
-                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                <div class="row gx-3 gx-sm-4 gy-5">
+                    <div class="col-6 col-xl-3 h-100">
                         <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
                             <div class="rounded-3 text-light bg-primary icon-amount fs-3 px-3 py-1" style="width: min-content;">
                                 <i class="fa-solid fa-sack-dollar"></i>
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                    <div class="col-6 col-xl-3 h-100">
                         <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
                             <div class="rounded-3 text-light bg-success icon-amount fs-3 px-3 py-1" style="width: min-content;">
                                 <i class="fa-solid fa-dollar-sign"></i>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                    <div class="col-6 col-xl-3 h-100">
                         <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
                             <div class="rounded-3 text-light bg-danger icon-amount fs-3 px-3 py-1" style="width: min-content;">
                                 <i class="fa-solid fa-coins"></i>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-6 col-lg-3 h-100">
+                    <div class="col-6 col-xl-3 h-100">
                         <div class="w-90 mx-auto bg-amount rounded-3 px-3 amount-shadow py-3 position-relative">
                             <div class="rounded-3 text-light bg-info icon-amount fs-3 px-3 py-1" style="width: min-content;">
                                 <i class="fa-solid fa-gift"></i>
@@ -82,7 +82,7 @@
             <div class="container-fluid my-5 px-0">
                 <div class="row gy-5 gx-3">
                     <div class="col-12 col-lg-8">
-                        <div class="w-90 ms-0 h-100 bg-amount text-light bg-opacity-25 rounded-3 px-4 pt-3">
+                        <div class="w-90 ms-0 h-100 bg-amount amount-shadow text-light bg-opacity-25 rounded-3 px-4 pt-3">
                             <div class="d-flex justify-content-between">
                                 <p class="fw-semibold fs-5">Chart Overview</p>
                                 <p class="bg-light text-dark rounded-pill px-3 py-1">#BTCUSD</p>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-4 pt-3">
+                        <div class="w-90 mx-auto bg-amount amount-shadow bg-opacity-25 rounded-3 px-4 pt-3">
                             <p class="fw-semibold fs-5">Latest Updates</p>
                             <div style="height: 500px;">
                                 <!-- TradingView Widget BEGIN -->
@@ -141,7 +141,7 @@
             <div class="container-fluid pb-5 px-0">
                 <div class="row gx-3 gy-5">
                     <div class="col-12 col-lg-8">
-                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-4 py-3">
+                        <div class="w-90 mx-auto bg-amount amount-shadow bg-opacity-25 rounded-3 px-4 py-3">
                             <p class="fs-5 fw-bold">Recent Transactions</p>
                             <div>
                                 <span class="px-3 py-2 history fw-semibold deposit"><i class="fa-solid fa-circle-down px-2"></i>Deposits</span>
@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="w-90 mx-auto bg-amount bg-opacity-25 rounded-3 px-3 py-3">
+                        <div class="w-90 mx-auto bg-amount amount-shadow bg-opacity-25 rounded-3 px-3 py-3">
                             <p class="fs-5 fw-bold">Refer Friends to Earn Commisions</p>
                             <p class="fw-light">Increase your commissions by inviting your friends to make deposits.</p>
                             <p><input class="form-control ref" type="text" value="https://fractalequities.com/invite/<%= user.username %>" aria-label="readonly input example" readonly></p>

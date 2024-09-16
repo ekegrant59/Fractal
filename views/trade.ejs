@@ -18,48 +18,32 @@
                     <p id="tradingplan" class="fs-3 mb-0 fw-bold lh-1 text-end" >None</p>
                 </div>
             </div>
-            <div class="bg-secondary bg-opacity-25 rounded-3 my-3">
+            <div class="bg-amount amount-shadow bg-opacity-25 rounded-3 my-3">
                 <div class="px-4 px-md-5 py-4">
                     <div class="px-md-3">
                         <table class="w-100">  
                             <tr>
                                 <th class="text-start fw-bold fs-5 color1">Profit</th>
                                 <td id="total-profit " class="text-end fw-bold fs-5">
-                                    <% if (Number.isInteger(user1.profit)){ %>
-                                        $<%= user1.profit %>.00
-                                    <% } else{ %>
-                                        $<%= user1.profit %>
-                                    <% } %>
+                                    <span class="">$</span><span id="userprofit"><%= user1.profit %></span>
                                 </td>   
                             </tr>
                             <tr>
                                 <th class="text-start fw-bold fs-5">Deposit</th>
                                 <td class="text-end fw-bold fs-5 color1">
-                                    <% if (Number.isInteger(user1.deposit)){ %>
-                                        $<%= user1.deposit %>.00
-                                    <% } else{ %>
-                                        $<%= user1.deposit %>
-                                    <% } %>
+                                    <span class="">$</span><span id="userdeposit"><%= user1.deposit %></span>
                                 </td>   
                             </tr>
                             <tr>
                                 <th class="text-start fw-bold fs-5 color1">Withdrawal</th>
                                 <td class="text-end fw-bold fs-5">
-                                    <% if (Number.isInteger(user1.withdrawal)){ %>
-                                        $<%= user1.withdrawal %>.00
-                                    <% } else{ %>
-                                        $<%= user1.withdrawal %>
-                                    <% } %>
+                                    <span class="">$</span><span id="userwithdrawal"><%= user1.withdrawal %></span>
                                 </td>   
                             </tr>
                             <tr>
                                 <th class="text-start fw-bold fs-5">Balance</th>
                                 <td id="account-balance" class="text-end fw-bold fs-5 color1">
-                                    <% if (Number.isInteger(user1.balance)){ %>
-                                        $<%= user1.balance %>.00
-                                    <% } else{ %>
-                                        $<%= user1.balance %>
-                                    <% } %>
+                                    <span class="">$</span><span id="userbalance"><%= user1.balance %></span>
                                 </td>   
                             </tr>           
                         </table>
@@ -71,14 +55,15 @@
                     <div class="px-md-3 bot">
                         <% if (botTxns.length > 0) { %>
                             <% botTxns.reverse().forEach(botTxn =>{ %>
+                                <% const formattedAmount = formatNumber(botTxn.amount);  %>
                                 <table class="w-100 mx-auto my-3">
                                     <tr>
                                         <th class="text-start"> <span class="font-semibold">BTCUSD <span class=""><%= botTxn.type  %></span> </span> </th>
                                          <td id="amount" class="text-end" style="font-weight: 900;">
                                             <% if (botTxn.loss){ %>
-                                                <span class="" style="color: red;">-$<%= botTxn.amount%></span>
+                                                <span class="" style="color: red;">-$<%= formattedAmount%></span>
                                             <% }else{ %>
-                                                <span class="" style="color: rgb(4, 201, 4);">$<%= botTxn.amount%></span>
+                                                <span class="" style="color: rgb(4, 201, 4);">$<%= formattedAmount%></span>
                                             <% } %>
                                         </td>
                                     </tr>
@@ -117,6 +102,24 @@
         }  else if (deposit >= 100000){
             tradingplan.innerText = 'Retirement'
         }
+
+        function formatNumber(num) {
+        if (Number.isInteger(num)) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        } else {
+            return num.toLocaleString('en-US');
+        }
+    }
+
+    let userbalance = Number("<%= user1.balance %>")
+    let userdeposit = Number("<%= user1.deposit %>")
+    let userprofit = Number("<%= user1.profit %>")
+    let userwithdrawal = Number("<%= user1.withdrawal %>")
+
+    document.getElementById('userbalance').innerHTML = formatNumber(userbalance)
+    document.getElementById('userdeposit').innerHTML = formatNumber(userdeposit)
+    document.getElementById('userprofit').innerHTML = formatNumber(userprofit)
+    document.getElementById('userwithdrawal').innerHTML = formatNumber(userwithdrawal)
     </script>
 
 </body>
