@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification - Fractal Equities</title>
+    <%- include('partials/headlinks') %>
+</head>
+<body>
+    <%- include('partials/usernav') %>
+     <main class="ps-4 ps-md-5 pe-4 px-lg-5 content py-3" data-bs-theme="dark">
+        <div class="">
+            <div class="">
+                <div class="d-lg-flex justify-content-between align-items-center gx-5">
+                    <h1 class="font-poppins fw-semibold pb-3 pb-md-0">KYC Verification</h1>
+                </div>
+
+                <div class="">
+                    <div class="py-sm-4  w-100">
+                        <div class="d-flex  justify-content-center justify-content-sm-start  align-items-top h-auto max-h- w-100 px-2 sm:px-5">
+                          <% if (!kyc){ %>
+                            <div class="bg-amount amount-shadow bg-opacity-25 rounded-3 form-container col-12 col-md-10 col-lg-8 col-xl-6">
+                        
+                              <!-- Progress Indicator -->
+                              <div class="mb-4">
+                                <p id="progress" class="text-center">Step <span id="stepNumber">1</span> of 4</p>
+                                <div class="progress" role="progressbar">
+                                  <div id="progressBar" class="progress-bar bg-primary" style="width: 25%; height: 100%;"></div>
+                                </div>
+                              </div>
+
+                              <!-- Error Message Display -->
+                                <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
+
+                        
+                              <!-- Personal Information Form -->
+                              <form id="personalInfoForm" class="step-form">
+                                <h2 class="mb-4">Personal Information</h2>
+                                <div class="mb-3">
+                                  <label for="firstname" class="form-label">First Name</label>
+                                  <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter your first name" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="middlename" class="form-label">Middle Name <span class="fw-light">(Optional)</span></label>
+                                  <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Enter your middle name" >
+                                </div>
+                                <div class="mb-3">
+                                  <label for="lastname" class="form-label">Last Name</label>
+                                  <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter your last name" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="dob" class="form-label">Date of Birth</label>
+                                  <input type="date" class="form-control" id="dob" name="dob" required>
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="nextStep('addressInfoForm')">Next</button>
+                              </form>
+                        
+                              <!-- Address Information Form -->
+                              <form id="addressInfoForm" class="step-form">
+                                <h2 class="mb-4">Address Information</h2>
+                                <div class="mb-3">
+                                    <label for="line1" class="form-label">Address Line 1</label>
+                                    <input type="text" class="form-control" id="line1" name="line1" placeholder="123 Main St" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="line2" class="form-label">Address Line 2</label>
+                                    <input type="text" class="form-control" id="line2" name="line2" placeholder="Apt 4B" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" name="city" placeholder="San Francisco" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="state" class="form-label">State/Province</label>
+                                    <input type="text" class="form-control" id="state" name="state" placeholder="California" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="zip" class="form-label">Zip Code</label>
+                                    <input type="number" class="form-control" id="zip" name="zip" placeholder="94103" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="country" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="country" name="country" placeholder="United States" required>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <div>
+                                        <button type="button" class="btn btn-secondary" onclick="prevStep('personalInfoForm')">Back</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary" onclick="nextStep('documentUploadForm')">Next</button>
+                                    </div>
+                                </div>
+                              </form>
+                        
+                              <!-- Document Upload Form -->
+                              <form id="documentUploadForm" class="step-form">
+                                <h2 class="mb-4">Document Upload</h2>
+                                <div class="mb-3">
+                                    <label for="documentType" class="form-label">Document Type:</label>
+                                    <select class="form-select" id="documentType" name="documentType" required>
+                                        <option value="" disabled>Select a document type</option>
+                                        <option value="national_id">National ID</option>
+                                        <option value="passport">Passport</option>
+                                        <option value="drivers_license">Driver's License</option>
+                                        <option value="tax_return">Tax Return</option>
+                                        <option value="residency_permit">Residency Permit</option>
+                                      </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="idDocument" class="form-label">Front of ID Document</label>
+                                    <div id="upload-area-1" class="upload-area text-center border border-secondary py-5" 
+                                    ondrop="handleDrop(event, 'fileInput1')" ondragover="handleDragOver(event)">
+                                        <p>Drag and drop File 1 here</p>
+                                        <p>or</p>
+                                        <input type="file" id="fileInput1" class="d-none" accept=".jpg, .jpeg, .png, .pdf" required>
+                                        <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput1').click()">Select File 1</button>
+                                    </div>
+                                    <div class="preview-area d-none"></div>
+                                    <div id="fileList1" class="mt-3"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="idDocument" class="form-label">Back of ID Document</label>
+                                    <div id="upload-area-2" class="upload-area text-center border border-secondary py-5" ondrop="handleDrop(event, 'fileInput2')" ondragover="handleDragOver(event)">
+                                    <p>Drag and drop File 2 here</p>
+                                    <p>or</p>
+                                    <input type="file" id="fileInput2" class="d-none" accept=".jpg, .jpeg, .png, .pdf" required>
+                                    <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput2').click()">Select File 2</button>
+                                </div>
+                                <div class="preview-area2 d-none"></div>
+                                <div id="fileList2" class="mt-3"></div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <button type="button" class="btn btn-secondary mt-2" onclick="prevStep('addressInfoForm')">Back</button>
+                                    <button type="button" class="btn btn-primary" onclick="nextStep('selfieCaptureForm')">Next</button>
+                                </div>                                
+                              </form>
+                        
+                              <!-- Selfie Capture Form -->
+                              <form id="selfieCaptureForm" class="step-form">
+                                <h2 class="mb-4">Selfie / Face Capture</h2>
+                                <div class="mb-3">
+                                  <label for="fileInput3" class="form-label">Take a Selfie</label>
+                                  <div id="upload-area-3" class="upload-area text-center border border-secondary py-5" 
+                                    ondrop="handleDrop(event, 'fileInput3')" ondragover="handleDragOver(event)">
+                                        <p>Drag and drop Selfie here</p>
+                                        <p>or</p>
+                                        <input type="file" id="fileInput3" class="d-none" accept=".jpg, .jpeg, .png, .pdf" required>
+                                        <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput3').click()">Select Selfie</button>
+                                    </div>
+                                    <div class="preview-area3 d-none"></div>
+                                    <div id="fileList3" class="mt-3"></div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                                    <button type="button" class="btn btn-secondary mt-2" onclick="prevStep('documentUploadForm')">Back</button>
+                                </div>
+                                
+                              </form>
+                        
+                            </div>
+                          <% } else if (kyc.status == 'pending'){ %>
+                            <div class="bg-amount amount-shadow bg-opacity-25 rounded-3 form-container col-12 col-md-10 col-lg-8 col-xl-6">
+                              <p class="fs-3 font-bold text-center">Your KYC submission has been received and is currently being reviewed.</p>
+                            </div>
+                          <% } else { %>
+                            <div class="bg-amount amount-shadow bg-opacity-25 rounded-3 form-container col-12 col-md-10 col-lg-8 col-xl-6">
+                              <p class="text-success d-flex justify-content-center align-items-center" style="font-size: 100px;">
+                                <i class="fa-regular fa-circle-check"></i>
+                              </p>
+                              <p class="fs-3 font-bold text-center">Your KYC submission has been Approved successfully!</p>
+                            </div>
+                          <% } %>
+                          </div>
+                    </div>
+
+  <!-- Bootstrap JS (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7b4l5dndY5Ez98I6f9rdIu16QZ+7Z7Le/25" crossorigin="anonymous"></script>
+  <script src="kyc.js" defer></script>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+
+         // Prevent default drag behaviors
+         window.handleDragOver = function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+
+        // Handle file drop
+        window.handleDrop = function(event, inputId) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const files = event.dataTransfer.files;
+            displayFiles(files, inputId);
+        };
+
+        // Display files in a list
+    function displayFiles(files, inputId) {
+        const fileList = document.getElementById(`fileList${inputId.charAt(inputId.length - 1)}`);
+        const fileInput = document.getElementById(inputId);
+        let previewarea, inputarea
+        if (inputId == 'fileInput1'){
+            previewarea = document.querySelector('.preview-area')
+            inputarea = document.getElementById('upload-area-1')
+        } else if (inputId == 'fileInput2'){
+            previewarea = document.querySelector('.preview-area2')
+            inputarea = document.getElementById('upload-area-2')
+        } else {
+            previewarea = document.querySelector('.preview-area3')
+            inputarea = document.getElementById('upload-area-3')
+        }
+
+        fileList.innerHTML = '';  // Clear any previous files
+
+        if (files.length > 0) {
+            const file = files[0]; // Accept only the first file
+            const listItem = document.createElement('div');
+            listItem.textContent = `${file.name} (${file.size} bytes) `;
+
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.classList.add('preview');
+            previewarea.innerHTML = '';  // Clear the upload area
+            previewarea.appendChild(img); // Add the image preview
+            previewarea.classList.remove('d-none')
+            inputarea.classList.add('d-none')
+            
+            // Add delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'btn btn-danger btn-sm ms-2';
+            deleteButton.onclick = function () {
+                fileInput.value = '';  // Clear file input
+                fileList.innerHTML = ''; // Remove file from list
+                previewarea.classList.add('d-none')
+                inputarea.classList.remove('d-none')
+            };
+            listItem.appendChild(deleteButton);
+            fileList.appendChild(listItem);
+
+            // Update file input with the selected file
+            fileInput.files = files;
+           
+            //upload image
+            const cloudName = 'dvk93z9vj'; // Replace with your Cloudinary cloud name
+              const uploadPreset = 'unsigned_preset'; // Replace with your Cloudinary upload preset
+
+              const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+              const formData = new FormData();
+              formData.append('file', files[0]);
+              formData.append('upload_preset', uploadPreset);
+
+              return fetch(url, {
+                  method: 'POST',
+                  body: formData,
+              })
+              .then(response => response.json())
+              .then(data => {
+                // console.log(data.secure_url)
+                localStorage.setItem(inputId, data.secure_url)
+              })
+              .catch(error => {
+                  console.error('Error uploading to Cloudinary:', error);
+                  showErrorMessage(error)
+              });
+        }
+    }
+
+    // Handle file selection via input
+    const fileInputs = [document.getElementById('fileInput1'), document.getElementById('fileInput2'), document.getElementById('fileInput3')];
+    fileInputs.forEach(fileInput => {
+        fileInput.addEventListener('change', function() {
+            const files = this.files;
+            displayFiles(files, this.id);
+        });
+    });
+
+  // Show the first form on page load
+  document.getElementById("personalInfoForm").classList.remove("step-form");
+  updateProgress(1);
+
+  // Step navigation and localStorage save function
+  window.nextStep = function (nextFormId) {
+    const currentForm = document.querySelector("form:not(.step-form)");
+    const nextForm = document.getElementById(nextFormId);
+    
+    // Validate current form fields
+    if (!validateForm(currentForm)) return;
+    
+    if (nextFormId != 'selfieCaptureForm' ){
+      // Save current form data to localStorage
+      saveFormData(currentForm);
+    } else {
+      const documentType = document.getElementById('documentType')
+      localStorage.setItem('document_type', documentType.value)
+    }
+
+    // Hide current form and show the next form
+    currentForm.classList.add("step-form");
+    nextForm.classList.remove("step-form");
+    
+    updateProgress(nextFormId === "addressInfoForm" ? 2 : nextFormId === "documentUploadForm" ? 3 : 4);
+  };
+
+  window.prevStep = function (prevFormId) {
+    const currentForm = document.querySelector("form:not(.step-form)");
+    const prevForm = document.getElementById(prevFormId);
+    
+    // Hide current form and show the previous form
+    currentForm.classList.add("step-form");
+    prevForm.classList.remove("step-form");
+
+    updateProgress(prevFormId === "personalInfoForm" ? 1 : prevFormId === "addressInfoForm" ? 2 : 3);
+  };
+
+  // Update progress bar and step number
+  function updateProgress(stepNumber) {
+    document.getElementById("stepNumber").textContent = stepNumber;
+    document.getElementById("progressBar").style.width = (stepNumber * 25) + '%';
+  }
+
+  // Validate form fields
+  function validateForm(form) {
+    const inputs = form.querySelectorAll("input, textarea");
+    for (let input of inputs) {
+      if (!input.checkValidity()) {
+        alert("Please fill out all fields correctly.");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Save form data to localStorage
+  function saveFormData(form) {
+    const inputs = form.querySelectorAll("input, textarea");
+    inputs.forEach(input => {
+      localStorage.setItem(input.id, input.value);
+    });
+  }
+
+  // Validate file types and sizes
+  function validateFile(file) {
+    const allowedExtensions = ["image/jpeg", "image/png"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!allowedExtensions.includes(file.type)) {
+      return { isValid: false, message: `Invalid file type for ${file.name}. Only JPG, PNG are allowed.` };
+    }
+
+    if (file.size > maxSize) {
+      return { isValid: false, message: `File too large for ${file.name}. Maximum allowed size is 5MB.` };
+    }
+
+    return { isValid: true };
+  }
+
+
+
+  // Submit the form data using Fetch API
+  window.submitForm = function () {
+    const data = new FormData();
+    const email = `<%= user.email %>`
+
+    
+    // console.log(email)
+
+    // Gather data from localStorage
+    data.append("firstname", localStorage.getItem("firstname"));
+    data.append("lastname", localStorage.getItem("lastname"));
+    data.append("middlename", localStorage.getItem("middlename"));
+    data.append("dob", localStorage.getItem("dob"));
+    data.append("line1", localStorage.getItem("line1"));
+    data.append("line2", localStorage.getItem("line2"));
+    data.append("city", localStorage.getItem("city"));
+    data.append("country", localStorage.getItem("country"));
+    data.append("zip", localStorage.getItem("zip"));
+    data.append("state", localStorage.getItem("state"));
+    data.append("front", localStorage.getItem("fileInput1"));
+    data.append("back", localStorage.getItem("fileInput2"));
+    data.append("selfie", localStorage.getItem("fileInput3"));
+    data.append("documentType", localStorage.getItem("document_type"))
+    data.append("email", email)
+
+    const kycdata = new URLSearchParams(data)
+
+    //fetch request to the backend
+    fetch("/kyc-verify", {
+      method: "POST",
+      body: kycdata
+    })
+      .then(response => response.json())
+      .then(() => {
+        localStorage.clear(); // Clear stored form data
+        location.reload()
+      })
+      .catch(error => {
+        showErrorMessage("An error occurred while submitting the form. Please try again.");
+        setTimeout(() => {
+          hideErrorMessage()
+        }, 5000);
+      });
+  };
+
+// Show error message
+function showErrorMessage(message) {
+  const errorDiv = document.getElementById("errorMessage");
+  errorDiv.textContent = message;          // Set the error message text
+  errorDiv.classList.remove("d-none");     // Show the error message
+}
+
+// Hide error message
+function hideErrorMessage() {
+  const errorDiv = document.getElementById("errorMessage");
+  errorDiv.classList.add("d-none");        // Hide the error message
+}
+});
+
+    </script>
+
+</body>
+</html>

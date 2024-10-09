@@ -12,7 +12,7 @@ const balanceSchema = require('./schema/balanceSchema')
 const depositSchema = require('./schema/depositSchema')
 const withdrawSchema = require('./schema/withdrawSchema')
 const botSchema = require('./schema/botSchema')
-
+const kycSchema = require('./schema/kycSchema')
 
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
@@ -266,7 +266,7 @@ app.post('/signup', async (req,res)=>{
   }
 })
 
-app.post('/login', (req,res)=>{
+app.post('/login', async (req,res)=>{
   const loginInfo = req.body
 
   const email = loginInfo.email
@@ -351,6 +351,57 @@ app.get('/dashboard/profile', protectRoute, async (req,res)=>{
     console.log(err)
 }
 })
+
+app.get('/dashboard/kyc', protectRoute, async (req,res)=>{
+  try{
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    const kyc = await kycSchema.findOne({email: auser})
+    res.render('kyc', {user: theuser, user1: theuser1, kyc: kyc})
+} catch(err){
+    console.log(err)
+}
+})
+
+app.post('/kyc-verify', async (req,res)=>{
+    try{
+        const {firstname, lastname, middlename, dob, line1, line2, city, state, country, front, back, selfie, email, documentType} = req.body
+        const user = await userschema.findOne({email: email})
+
+        const kyc = new kycSchema({
+            firstname: firstname,
+            lastname: lastname,
+            middlename: middlename,
+            dob: dob,
+            line1: line1,
+            line2: line2,
+            city: city,
+            state: state, 
+            country: country,
+            front: front,
+            back: back,
+            selfie: selfie,
+            email: email,
+            documentType: documentType,
+            status: 'pending'
+        })
+        await kyc.save()        
+
+        userSchema.findByIdAndUpdate(user._id, {$set: {status: 'pending', }}, {new: true}, (err,dets)=>{
+            if (err){
+                res.status(404).json({ message: 'Something went wrong' });
+            } else{
+                res.status(200).json({ message: 'OK' });
+            }
+        })
+        
+    } catch (err){
+        console.log(err)
+    }
+})
+
+
 app.get('/dashboard/deposit', protectRoute, async (req,res)=>{
   try{
     const auser = req.user.user.email
@@ -557,12 +608,13 @@ app.get('/invite/:id', (req,res)=>{
 app.get('/admin',protectAdminRoute, async (req,res)=>{
   try{
       const user = await userschema.find()
+      const kyc = await kycSchema.find()
       const pendDeposit = await depositSchema.find({status: 'Pending'})
       const confirmDeposit = await depositSchema.find({status: 'Confirmed'})
       const pendingwithdrawal = await withdrawSchema.find({status: 'Pending'})
       const confirmwithdrawal = await withdrawSchema.find({status: 'Confirmed'})
       const failedwithdrawal = await withdrawSchema.find({status: 'Failed'})
-      res.render('admin', {users: user, pendDeposits: pendDeposit, confirmDeposits: confirmDeposit, confirmWithdrawals: confirmwithdrawal, pendingWithdrawals: pendingwithdrawal, failedwithdrawals:failedwithdrawal })
+      res.render('admin', {users: user, pendDeposits: pendDeposit, confirmDeposits: confirmDeposit, confirmWithdrawals: confirmwithdrawal, pendingWithdrawals: pendingwithdrawal, failedwithdrawals:failedwithdrawal, kyc })
   } catch(err){
       console.log(err)
   }
@@ -639,6 +691,61 @@ app.get('/admin/edit/:id', async (req,res)=>{
     } catch(err){
         console.log(err)
     }
+})
+
+app.get('/admin/view/:id', async (req,res)=>{
+    const id = req.params.id
+    // console.log(id)
+    const user = await userSchema.findById(id)
+    const kyc = await kycSchema.findOne({email: user.email})
+    res.render('user-kyc', {user, kyc})
+})
+
+app.post('/kyc-reject/:id', async (req,res)=>{
+    const id = req.params.id
+    const user = await userSchema.findById(id)
+
+    userSchema.findByIdAndUpdate(id, {$set: {status: 'none', }}, {new: true}, (err,dets)=>{
+        if (err){
+            console.log(err)
+            req.flash('danger', 'An Error Occured, Please try again')
+            res.redirect(`/admin/view/${id}`)
+        } else{
+            kycSchema.findOneAndUpdate({email: user.email}, {$set: {status: 'none', }}, {new: true}, (err,dets)=>{
+                if (err){
+                    console.log(err)
+                    req.flash('danger', 'An Error Occured, Please try again')
+                    res.redirect(`/admin/view/${id}`)
+                } else{
+                    req.flash('danger', 'User KYC Rejected!!')
+                    res.redirect(`/admin/view/${id}`)
+                }
+            })
+        }
+    })
+})
+app.post('/kyc-accept/:id', async (req,res)=>{
+    const id = req.params.id
+    const user = await userSchema.findById(id)
+
+    userSchema.findByIdAndUpdate(id, {$set: {status: 'verified', }}, {new: true}, (err,dets)=>{
+        if (err){
+            console.log(err)
+            req.flash('danger', 'An Error Occured, Please try again')
+            res.redirect(`/admin/view/${id}`)
+        } else{
+            kycSchema.findOneAndUpdate({email: user.email}, {$set: {status: 'verified', }}, {new: true}, (err,dets)=>{
+                if (err){
+                    console.log(err)
+                    req.flash('danger', 'An Error Occured, Please try again')
+                    res.redirect(`/admin/view/${id}`)
+                } else{
+                    req.flash('success', 'User KYC Accepted Successfully!')
+                    res.redirect(`/admin/view/${id}`)
+                }
+            })
+        }
+    })
 })
 
 app.post('/admin/edit', (req,res)=>{

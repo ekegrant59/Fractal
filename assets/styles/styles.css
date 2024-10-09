@@ -464,3 +464,68 @@ footer a:hover{
 #closeIcon22 i {
     box-shadow: none;        /* Ensures the icon inside has no shadow */
 }
+
+.progress{
+    height: 10px;
+  }
+  .step-form {
+    display: none;
+  }
+  .form-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .success-modal {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
+  .success-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .upload-area {
+    border-style: dashed !important;
+    border-radius: 5px;
+    height: 200px;
+  }
+
+  .preview-area {
+    border-radius: 5px;
+    max-height: 200px;
+  }
+
+  .upload-area:hover {
+    cursor: pointer;
+  }
+
+  .upload-area p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+
+  .preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 10px;
+}

@@ -26,6 +26,7 @@
                                     <div class="col">Last Name</div>
                                     <div class="col">Username</div>
                                     <div class="col">Email</div>
+                                    <div class="col">KYC</div>
                                     <div class="col">Password</div>
                                     <div class="col">Country</div>
                                     <div class="col">Number</div>
@@ -42,6 +43,17 @@
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.lastName %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.username %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.email %> </b></div>
+                                                    <div class="col text-nowrap overflow-x-auto">
+                                                        <% if (user.status == 'none'){ %>
+                                                            <b class="text-primary">Not submitted</b>
+                                                        <% } else if (user.status == 'pending') {%>
+                                                            <b><a class="text-decoration-none text-danger" href="/admin/view/<%= user.id %>">KYC Pending 
+                                                                <i class="fa-solid fa-arrow-right"></i>
+                                                            </a></b>
+                                                        <% } else { %>
+                                                            <b><a class="text-success" href="/admin/view/<%= user.id %>">View Documents  <i class="fa-solid fa-arrow-right"></i></a></b>
+                                                        <% } %>
+                                                    </div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.password %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.country %> </b></div>
                                                     <div class="col text-nowrap overflow-x-auto"><b><%= user.number %> </b></div>
