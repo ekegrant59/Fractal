@@ -38,14 +38,21 @@
                                                 <select class="form-select" id="selectMethod" name="coin">
                                                     <option value="USDT-ETH" selected>USDT (ERC-20)</option>
                                                     <option value="USDT-TRC">USDT (TRC-20)</option>
+                                                    <option value="USDC-ETH">USDC (ERC-20)</option>
+                                                    <option value="USDC-SOL">USDC (SOL)</option>  
+                                                    <option value="USDT-BSC">USDT (BSC)</option>  
+                                                    <option value="USDT-SOL">USDT (SOL)</option>  
                                                     <option value="BTC">Bitcoin</option>
                                                     <option value="ETH">Ethereum</option>
+                                                    <option value="CRO">Cronos</option>
                                                     <option value="BNB">BNB Smart Chain</option>
                                                     <option value="BNB1">BNB Beacon Chain</option>
                                                     <option value="INJ">Injective (INJ)</option>
                                                     <option value="LTC">Litecoin (LTC)</option>
                                                     <option value="DOGE">Dogecoin (DOGE)</option>
                                                     <option value="SOL">Solana (SOL)</option>
+                                                    <option value="XRP">Ripple (XRP)</option>
+                                                    <option value="XMR">Monero (XMR)</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3 ">
@@ -66,11 +73,11 @@
                                             <div class="address">
                                                 <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
                                                 <div class="mb-3">
-                                                    <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                    <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                                 </div>
                                             </div>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control text-center ref" value="0xf3238eF57455f4a9137492b43A4Ac032093cE81E" aria-label="readonly input example" readonly>
+                                                <input type="text" class="form-control text-center ref" value="0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94" aria-label="readonly input example" readonly>
                                                 <span class="input-group-text"><button type="button" class="btn btn-warning copy"
                                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 0.75rem;" id="copy">
                                                 COPY
@@ -115,10 +122,10 @@
                 address.innerHTML = `
                                             <p class="fw-bold fs-5">USDT (ERC-20) Address</p>
                                             <div class="mb-3">
-                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'USDT-TRC'){
                 address.innerHTML = `
@@ -127,7 +134,43 @@
                                                 <img src="/assets/img/tron.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = 'TCtkPceKpW2pHJ5cmY58oujFXjrhE1FZeP'
+                ref.value = 'TAwmbkUTdfN93dgiV92bXtK7y7XKtrkTbr'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'USDC-ETH'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDC (ERC-20) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'USDT-BSC'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDT (BSC) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'USDC-SOL'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDC (Solana) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/SOL.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'J2aorpshbbcbG8ygzCsTWCrc6xLvXcrx82zXxLe4gLAc'
+                copy.innerHTML = 'COPY'
+            } else if (selected == 'USDT-SOL'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">USDT (Solana) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/SOL.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'J2aorpshbbcbG8ygzCsTWCrc6xLvXcrx82zXxLe4gLAc'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'BTC'){
                 address.innerHTML = `
@@ -142,19 +185,28 @@
                 address.innerHTML = `
                         <p class="fw-bold fs-5">ETH Address</p>
                                             <div class="mb-3">
-                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
+                copy.innerHTML = 'COPY'
+            }  else if (selected == 'CRO'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Cronos Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'BNB'){
                 address.innerHTML = `
                         <p class="fw-bold fs-5">BNB Smart Chain Address</p>
                                             <div class="mb-3">
-                                                <img src="/assets/img/eth.jpeg" alt="" class="img-fluid rounded-3" width="200px">
+                                                <img src="/assets/img/eth.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = '0xf3238eF57455f4a9137492b43A4Ac032093cE81E'
+                ref.value = '0x3e4cE3e7C4b4B17a99Fc86E421d266aA8eccbD94'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'BNB1'){
                 address.innerHTML = `
@@ -163,7 +215,7 @@
                                                 <img src="/assets/img/BNB1.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = 'bnb1xdd3f2r0cen3mw0ng4zhf5xr93vc7ly75cu60c'
+                ref.value = 'bnb1rzdrq80c3787y55vzv2gar32e56khnzy6h7cwv'
                 copy.innerHTML = 'COPY'
             } else if (selected == 'INJ'){
                 address.innerHTML = `
@@ -181,7 +233,7 @@
                                                 <img src="/assets/img/LTC.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = 'ltc1q2jk9vm4slt8gzhwrhsm88zupf7tw8aercv9xvur'
+                ref.value = 'LZ5qqG1H8Xb2q3ecVphqcgAETAPc2PQDSm'
                 copy.innerHTML = 'COPY'
             }else if (selected == 'DOGE'){
                 address.innerHTML = `
@@ -199,7 +251,25 @@
                                                 <img src="/assets/img/SOL.jpg" alt="" class="img-fluid rounded-3" width="200px">
                                             </div>
                 `
-                ref.value = 'CrV4ohFAnCPnAGWMoyvBduPMsdrEdBJuBfhHo5CH8Jy7'
+                ref.value = 'J2aorpshbbcbG8ygzCsTWCrc6xLvXcrx82zXxLe4gLAc'
+                copy.innerHTML = 'COPY'
+            }else if (selected == 'XRP'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Ripple (XRP) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/SOL.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = 'r4tx7fmAqvexqk1YmshSAtqwyDvF9uVzPh'
+                copy.innerHTML = 'COPY'
+            }else if (selected == 'XMR'){
+                address.innerHTML = `
+                        <p class="fw-bold fs-5">Monero (XRM) Address</p>
+                                            <div class="mb-3">
+                                                <img src="/assets/img/monero.jpg" alt="" class="img-fluid rounded-3" width="200px">
+                                            </div>
+                `
+                ref.value = '4ARspMv95HBjgv3q6UJHd5La9fbnmQE13RSihXPqoc1BCBF3AxHqNL5Nsbv8qjbZuXfWDAxxtLLvKXcomEs4V2QpKNidWbo'
                 copy.innerHTML = 'COPY'
             }
         })
