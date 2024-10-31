@@ -254,12 +254,11 @@ app.post('/signup', async (req,res)=>{
           })
           await balance.save()
 
-          verifyemail(email)
-          newuser(email)
-
         //   console.log(user)
           req.flash('success', 'Sign Up Successfully, Verification Link Sent To Your Email!')
           res.redirect('/signup')
+          verifyemail(email)
+          newuser(email)
       }catch(err){
           console.log(err)
       }
@@ -973,10 +972,10 @@ async function botTnx(username){
             // generateAmount(email)
             const amount = await generateAmount(username)
             if(btcPrice != null){
-                console.log(`BTC Price: ${btcPrice}`)
-                console.log(`Bot started for ${username}`)
-                console.log(`Time: ${formattedDateTime}`)
-                console.log(`Amount : ${amount}`)
+                // console.log(`BTC Price: ${btcPrice}`)
+                // console.log(`Bot started for ${username}`)
+                // console.log(`Time: ${formattedDateTime}`)
+                // console.log(`Amount : ${amount}`)
 
                 const isBuyTransaction = Math.random() < 0.5;
                 const isLossTransaction = Math.random() < 0.13;
