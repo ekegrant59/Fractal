@@ -113,11 +113,16 @@ app.get('/signup', function(req,res){
 })
 
 app.get('/verify/:id', async function(req,res){ 
-    let id = req.params.id
+    try {
+        let id = req.params.id
     verifiedemail(id)
     const theuser = await userschema.findOne({_id: id})
     const name = theuser.firstName + ' ' +  theuser.lastName
     res.render('verify', {name: name})
+    } catch (error) {
+        console.log(error)
+        
+    }
 })
 
 async function verifiedemail(id){
@@ -528,6 +533,7 @@ app.post('/withdraw',async(req,res)=>{
 })
 
 app.post('/changepassword/:id', async (req,res)=>{
+   try {
     const {oldpassword, newpassword, confirmpassword} = req.body
     const id = req.params.id
 
@@ -554,7 +560,11 @@ app.post('/changepassword/:id', async (req,res)=>{
                 res.redirect('/dashboard/profile')
             }
         })
-    }
+    }    
+   } catch (error) {
+        console.log(error)
+        res.status(500).send('Server error');
+   }
 })
 
 app.get('/logout', (req,res)=>{
@@ -563,9 +573,14 @@ app.get('/logout', (req,res)=>{
 })
 
 app.get('/invite/:id', (req,res)=>{
-    let refferer = req.params.id
+    try {
+        let refferer = req.params.id
 
     res.render('reffered', {referrer: refferer})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Server error');
+    }
 })
 
 // app.get('/adminregister', (req,res)=>{
@@ -604,20 +619,57 @@ app.get('/invite/:id', (req,res)=>{
         
       })
   
-app.get('/admin',protectAdminRoute, async (req,res)=>{
-  try{
-      const user = await userschema.find()
-      const kyc = await kycSchema.find()
-      const pendDeposit = await depositSchema.find({status: 'Pending'})
-      const confirmDeposit = await depositSchema.find({status: 'Confirmed'})
-      const pendingwithdrawal = await withdrawSchema.find({status: 'Pending'})
-      const confirmwithdrawal = await withdrawSchema.find({status: 'Confirmed'})
-      const failedwithdrawal = await withdrawSchema.find({status: 'Failed'})
-      res.render('admin', {users: user, pendDeposits: pendDeposit, confirmDeposits: confirmDeposit, confirmWithdrawals: confirmwithdrawal, pendingWithdrawals: pendingwithdrawal, failedwithdrawals:failedwithdrawal, kyc })
-  } catch(err){
-      console.log(err)
-  }
-})
+// Helper function to get status label
+const getStatusLabel = (status, id) => {
+    if (status === 'none') {
+      return '<b class="text-primary">Not submitted</b>';
+    } else if (status === 'pending') {
+      return `<b><a class="text-decoration-none text-danger" href="/admin/view/${id}">KYC Pending <i class="fa-solid fa-arrow-right"></i></a></b>`;
+    } else {
+      return `<b><a class="text-success" href="/admin/view/${id}">View Documents <i class="fa-solid fa-arrow-right"></i></a></b>`;
+    }
+  };
+  
+  // Admin route with optimized queries and pagination
+  app.get('/admin', protectAdminRoute, async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 30; // Number of users per page
+  
+      // Run database queries concurrently
+      const [users, pendDeposits, confirmDeposits, pendingWithdrawals, confirmWithdrawals, failedWithdrawals, kyc] = await Promise.all([
+        userschema.find().skip((page - 1) * limit).limit(limit),
+        depositSchema.find({ status: 'Pending' }),
+        depositSchema.find({ status: 'Confirmed' }),
+        withdrawSchema.find({ status: 'Pending' }),
+        withdrawSchema.find({ status: 'Confirmed' }),
+        withdrawSchema.find({ status: 'Failed' }),
+        kycSchema.find()
+      ]);
+  
+      // Add statusLabel to users
+      const usersWithStatus = users.map(user => ({
+        ...user.toObject(),
+        statusLabel: getStatusLabel(user.status, user.id)
+      }));
+  
+      res.render('admin', {
+        users: usersWithStatus,
+        pendDeposits,
+        confirmDeposits,
+        confirmWithdrawals,
+        pendingWithdrawals,
+        failedWithdrawals,
+        kyc,
+        page
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    }
+  });
+  
+      
   
   function protectAdminRoute(req, res, next){
       const token = req.cookies.admintoken
@@ -828,7 +880,8 @@ app.post('/unconfirm/withdrawal', async (req,res)=>{
 })
 
 app.post('/delete/user', async (req,res)=>{
-    const body = req.body
+    try {
+        const body = req.body
     const filter = {_id: body.id}
 
     let user = userschema.findOne(filter)
@@ -847,6 +900,10 @@ app.post('/delete/user', async (req,res)=>{
     });
 
     res.redirect('/admin')
+    } catch (error) {
+        console.log(error)
+        
+    }
 })
 
 app.post('/startBot', async (req,res)=>{
