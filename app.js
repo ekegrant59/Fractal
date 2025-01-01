@@ -634,7 +634,7 @@ const getStatusLabel = (status, id) => {
   app.get('/admin', protectAdminRoute, async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
-      const limit = 30; // Number of users per page
+      const limit = 200; // Number of users per page
   
       // Run database queries concurrently
       const [users, pendDeposits, confirmDeposits, pendingWithdrawals, confirmWithdrawals, failedWithdrawals, kyc] = await Promise.all([
