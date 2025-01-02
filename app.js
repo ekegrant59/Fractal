@@ -133,7 +133,7 @@ async function verifiedemail(id){
     const email = theuser.email
 
     const mailOptions = {
-        from: '"Fractal Equities" support@fractalequities.com', // sender address
+        from: '"Fractal Equities" support@fractalequities.com ', // sender address
         template: "verifiedemail", // the name of the template file, i.e., email.handlebars
         to: `${email}`,
         subject: 'Welcome to Fractal Equities',
@@ -156,7 +156,7 @@ async function verifyemail(email){
     // console.log(id, email, name)
 
     const mailOptions = {
-        from: '"Fractal Equities" support@fractalequities.com', // sender address
+        from: '"Fractal Equities" support@fractalequities.com ', // sender address
         template: "email", // the name of the template file, i.e., email.handlebars
         to: `${email}`,
         subject: 'Please Verify Your Email Address ',
@@ -179,7 +179,7 @@ async function newuser(email){
     // console.log(id, email, name)
 
     const mailOptions = {
-        from: '"Fractal Equities" support@fractalequities.com', // sender address
+        from: '"Fractal Equities" support@fractalequities.com ', // sender address
         template: "newuser", // the name of the template file, i.e., email.handlebars
         to: 'contactfractalequities@gmail.com',
         subject: 'User Registeration!!',
@@ -202,7 +202,7 @@ app.post('/signup', async (req,res)=>{
   const password22 = details.password22
   const email = details.email
   const username = details.username
-  console.log(captcha)
+//   console.log(captcha)
 
   const date = new Date()
   // console.log(date)
@@ -472,6 +472,84 @@ app.get('/dashboard/trade', protectRoute, async (req,res)=>{
     console.log(err)
 }
 })
+
+async function fetchTop10Cryptos() {
+    try {
+      const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
+        params: {
+          vs_currency: 'usd', // Prices in USD
+          order: 'market_cap_desc', // Sorted by market cap
+          per_page: 8, // Limit to top 10
+          page: 1, // Fetch first page
+          sparkline: false, // Exclude sparkline data
+        },
+      });
+      return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 429) {
+            const retryAfter = parseInt(error.response.headers['retry-after'], 10) || 5; // Default to 5 seconds
+            console.log(`Rate limited. Retrying after ${retryAfter} seconds...`);
+            await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+            return fetchTop10Cryptos(); // Retry
+          }
+          console.error('Error fetching crypto list:', error.message);
+    }
+  }
+  
+  const fetchCryptoData = async (cryptoId) => {
+    const currency = "usd";
+    const [priceResponse, chartResponse] = await Promise.all([
+      axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=${currency}`),
+      axios.get(`https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency}&days=7`),
+    ]);
+  
+    return {
+      price: priceResponse.data[cryptoId][currency],
+      chart: chartResponse.data.prices,
+    };
+  };
+
+app.get('/dashboard/trading', protectRoute, async (req,res)=>{
+  try{
+    const cryptoList = await fetchTop10Cryptos();
+    const bitcoinData = await fetchCryptoData("bitcoin");
+
+    const auser = req.user.user.email
+    const theuser = await userschema.findOne({email: auser})
+    const theuser1 = await balanceSchema.findOne({email: auser})
+    console.log(bitcoinData.price)
+    console.log(bitcoinData.chart)
+    res.render('trading', 
+        {
+        user: theuser, 
+        user1: theuser1, 
+        formatNumber, 
+        cryptoList,
+        defaultCrypto: {
+          id: "bitcoin",
+          name: "Bitcoin",
+          price: bitcoinData.price,
+          chart: bitcoinData.chart,
+        }
+    })
+
+} catch(err){
+    console.log(err)
+}
+})
+
+app.get("/api/price/:cryptoId", async (req, res) => {
+    try {
+      const { cryptoId } = req.params;
+      const currency = "usd";
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=${currency}`
+      );
+      res.json({ price: response.data[cryptoId][currency] });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch price data" });
+    }
+  });
 
 function protectRoute(req, res, next){
   const token = req.cookies.logintoken
