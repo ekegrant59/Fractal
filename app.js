@@ -14,6 +14,7 @@ const withdrawSchema = require('./schema/withdrawSchema')
 const botSchema = require('./schema/botSchema')
 const kycSchema = require('./schema/kycSchema')
 
+const axios = require('axios');
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
 const path = require('path')
@@ -22,6 +23,7 @@ const userSchema = require('./schema/userSchema')
 
 const adminkey = process.env.ADMINKEY
 const secretkey = process.env.SECRETKEY
+const RECAPTCHA_SECRET_KEY = process.env.CAPTCHA
 
 const mongodb = process.env.MONGODB
 mongoose.connect(mongodb)
@@ -195,37 +197,59 @@ async function newuser(email){
 }
 
 app.post('/signup', async (req,res)=>{
-  const details = req.body
+  const { 'g-recaptcha-response':captcha , ...details } = req.body
   const password11 = details.password11
   const password22 = details.password22
   const email = details.email
   const username = details.username
+  console.log(captcha)
 
   const date = new Date()
   // console.log(date)
 
+  if (!captcha) {
+    req.flash('danger', 'Captcha is required')
+    res.redirect('/signup')
+    }
+
   const theuser = await userschema.findOne({username: username})
   
+  const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captcha}`;
 
-  userschema.findOne({email: email}, (err, details)=>{
-      if(details){
-          req.flash('danger', 'This Email Has Already Been Registered')
-          res.redirect('/signup')
-      }else{
-          if (theuser){
-            req.flash('danger', 'This Username is Not Available')
-            res.redirect('/signup')
-          } else{
-            if ( password11 != password22){
-              req.flash('danger', 'Your Passwords Do Not Match')
-              res.redirect('/signup')
-          }else {
-              registerUser()
-          }
-          }
-          
-      } 
-  })
+  try {
+    const response = await axios.post(verificationURL);
+    const { success } = response.data;
+
+    if (!success) {
+        req.flash('danger', 'Captcha verification failed')
+        res.redirect('/signup')
+    } else {
+        userschema.findOne({email: email}, (err, details)=>{
+            if(details){
+                req.flash('danger', 'This Email Has Already Been Registered')
+                res.redirect('/signup')
+            }else{
+                if (theuser){
+                req.flash('danger', 'This Username is Not Available')
+                res.redirect('/signup')
+                } else{
+                if ( password11 != password22){
+                    req.flash('danger', 'Your Passwords Do Not Match')
+                    res.redirect('/signup')
+                }else {
+                    registerUser()
+                }
+                }
+                
+            } 
+        })
+    }
+    
+  } catch (error) {
+    console.error('Error verifying captcha:', error);
+    req.flash('danger', 'Captcha verification failed')
+    res.redirect('/signup')        
+  }
 
 
   async function registerUser(){
