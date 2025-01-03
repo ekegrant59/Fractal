@@ -209,7 +209,7 @@ widgetContainer.appendChild(script);
               <td>${leverage}x</td>
               <td>${type.charAt(0).toUpperCase() + type.slice(1)}</td>
               <td class="pnl-cell">0</td>
-              <td><button class="btn btn-danger btn-sm close-btn" data-id="${_id}">Close Trade</button></td>
+              <td><button class="btn btn-danger btn-sm close-btn" data-id="${_id}">Close</button></td>
             `;
         
             // Append the row to the table body

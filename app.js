@@ -456,18 +456,52 @@ function formatNumber(num) {
     }
 }
 
-app.get('/dashboard/trade', protectRoute, async (req,res)=>{
-  try{
-    const auser = req.user.user.email
-    const theuser = await userschema.findOne({email: auser})
-    const theuser1 = await balanceSchema.findOne({email: auser})
-    const username = theuser1.username
-    const botTxns = await botSchema.find({username: username})
-    res.render('trade', {user: theuser, user1: theuser1, botTxns, formatNumber})
-} catch(err){
-    console.log(err)
-}
-})
+app.get('/dashboard/trade', protectRoute, async (req, res) => {
+    try {
+      const auser = req.user.user.email;
+      const theuser = await userschema.findOne({ email: auser });
+      const theuser1 = await balanceSchema.findOne({ email: auser });
+      const username = theuser1.username;
+      const botTxns = await botSchema.find({ username });
+      const trades = await tradeSchema.find({ auser, status: 'closed' });
+  
+      // Format botTxns and trades into a unified structure
+      const formattedBotTxns = botTxns.map(txn => ({
+        type: txn.type,
+        amount: txn.amount,
+        loss: txn.loss,
+        btcPrice: txn.btcPrice,
+        time: new Date(txn.time),
+        source: 'bot', // To differentiate
+        symbol: 'BTCUSD', // Fixed symbol for bot trades
+      }));
+  
+      const formattedTrades = trades.map(trade => ({
+        type: trade.type,
+        amount: Math.abs(trade.pnl),
+        loss: trade.pnl < 0, // Loss if PNL is negative
+        btcPrice: trade.entryPrice,
+        time: new Date(trade.date),
+        source: 'trade', // To differentiate
+        symbol: trade.symbol, // Symbol from the trade data
+      }));
+  
+      // Combine and sort by time in descending order (latest first)
+      const combinedData = [...formattedBotTxns, ...formattedTrades].sort(
+        (a, b) => b.time - a.time
+      );
+  
+      res.render('trade', {
+        user: theuser,
+        user1: theuser1,
+        combinedData,
+        formatNumber,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  
 
 
 app.get('/dashboard/trading', protectRoute, async (req,res)=>{
@@ -513,7 +547,7 @@ app.post('/trade/open/:id', async (req,res)=>{
         const userbalance = await balanceSchema.findOne({auser})
         const balance = userbalance.balance
 
-        if (Number.isNaN(variable)) {
+        if (Number.isNaN(amount)) {
             return res.status(401).json({ error: 'Not a number' });
         }
 
@@ -542,7 +576,7 @@ app.post('/trade/open/:id', async (req,res)=>{
             date: formattedDateTime
         })
         await trade.save()
-        console.log(trade)
+        // console.log(trade)
         req.flash('success', `${tradeType.toLocaleUpperCase()} Order on ${symbol} Placed Successfully`)
         res.redirect('/dashboard/trading')
     } catch(err){
@@ -601,6 +635,7 @@ app.patch('/api/closeTrade/:id', async (req, res) => {
     
         // Update the user's balance
         user.balance = user.balance + amountToAdd;
+        user.profit = user.profit + pnl
         await user.save();
     
         // Update the trade's PNL and status to 'closed'

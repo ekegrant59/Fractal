@@ -53,30 +53,40 @@
             <div class="">
                 <div class="px-4 px-md-5">
                     <div class="px-md-3 bot">
-                        <% if (botTxns.length > 0) { %>
-                            <% botTxns.reverse().forEach(botTxn =>{ %>
-                                <% const formattedAmount = formatNumber(botTxn.amount);  %>
-                                <table class="w-100 mx-auto my-3">
-                                    <tr>
-                                        <th class="text-start"> <span class="font-semibold">BTCUSD <span class=""><%= botTxn.type  %></span> </span> </th>
-                                         <td id="amount" class="text-end" style="font-weight: 900;">
-                                            <% if (botTxn.loss){ %>
-                                                <span class="" style="color: red;">-$<%= formattedAmount%></span>
-                                            <% }else{ %>
-                                                <span class="" style="color: rgb(4, 201, 4);">$<%= formattedAmount%></span>
-                                            <% } %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="btcPrice" class="text-start fw-light"><%= botTxn.btcPrice %>.00</th>
-                                         <td id="dateTime" class="text-end fw-light"><%= botTxn.time  %></td> 
-                                         
-                                    </tr>
-                                </table>
-                            <% }) %> 
-                        <% } else{ %>
-                            <p class="text-center fs-3">No Trades Yet...</p>
-                        <% } %>
+                        <% if (combinedData.length > 0) { %>
+                            <% combinedData.forEach(data => { %>
+                              <% const formattedAmount = formatNumber(data.amount); %>
+                              <table class="w-100 mx-auto my-3">
+                                <tr>
+                                  <th class="text-start">
+                                    <span class="font-semibold">
+                                      <%= data.symbol %> 
+                                      <span class="d-inline-flex align-items-center justify-content-center">
+                                        <%= data.type %> 
+                                        <% if (data.source === 'bot') { %> 
+                                            <span class="bg-light text-dark rounded-pill px-2 py-0 mb-0 ms-2" style="font-size: x-small;" id="crypto-name">automated</span>
+                                             <% } %>
+                                      </span>
+                                    </span>
+                                  </th>
+                                  <td id="amount" class="text-end" style="font-weight: 900;">
+                                    <% if (data.loss) { %>
+                                      <span class="" style="color: red;">-$<%= formattedAmount %></span>
+                                    <% } else { %>
+                                      <span class="" style="color: rgb(4, 201, 4);">$<%= formattedAmount %></span>
+                                    <% } %>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th id="btcPrice" class="text-start fw-light"><%= data.btcPrice %>.00</th>
+                                  <td id="dateTime" class="text-end fw-light"><%= data.time.toLocaleString() %></td> 
+                                </tr>
+                              </table>
+                            <% }) %>
+                          <% } else { %>
+                            <p>No data available</p>
+                          <% } %>
+                          
                     </div>
                 </div>
             </div>
