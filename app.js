@@ -241,8 +241,6 @@ app.post('/signup', async (req, res) => {
   
       // Register the user
       await registerUser(); // Assume registerUser handles user registration logic
-      req.flash('success', 'Signup successful! Please log in.');
-      return res.redirect('/login');
     } catch (error) {
       console.error('Error verifying captcha or processing signup:', error);
       req.flash('danger', 'An error occurred during signup. Please try again.');
