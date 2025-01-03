@@ -289,7 +289,6 @@ app.post('/signup', async (req, res) => {
           console.log(err)
       }
   }
-})
 
 app.post('/login', async (req,res)=>{
   const loginInfo = req.body
