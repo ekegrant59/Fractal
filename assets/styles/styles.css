@@ -529,3 +529,16 @@ footer a:hover{
     border-radius: 5px;
     margin-top: 10px;
 }
+
+#crypto-select option {
+    font-size: 0.5rem; /* Change size for options */
+  }
+
+  /* Style for the selected option (applied to the select element itself) */
+  #crypto-select {
+    font-size: 1.25rem; /* Change size for selected item */
+  }
+
+#tradingview-widget-container iframe{
+    height: 100% !important;
+}
