@@ -542,3 +542,15 @@ footer a:hover{
 #tradingview-widget-container iframe{
     height: 100% !important;
 }
+
+@media (max-width: 1199.98px) { 
+    #chartPlaceholder{
+        min-height: 600px;
+    }
+ }
+
+ @media (min-width: 1199.98px) { 
+   .wider-card{
+    max-width: 85%;
+   }
+ }

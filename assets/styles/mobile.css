@@ -35,3 +35,7 @@ footer img{
     height: 65vh;
     overflow-y: auto;
 }
+
+#chartPlaceholder{
+    min-height: 600px;
+}

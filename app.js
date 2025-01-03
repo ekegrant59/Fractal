@@ -13,12 +13,14 @@ const depositSchema = require('./schema/depositSchema')
 const withdrawSchema = require('./schema/withdrawSchema')
 const botSchema = require('./schema/botSchema')
 const kycSchema = require('./schema/kycSchema')
+const tradeSchema = require('./schema/tradeSchema')
 
 const axios = require('axios');
 const hbs = require('nodemailer-express-handlebars')
 const nodemailer = require('nodemailer')
 const path = require('path')
 const userSchema = require('./schema/userSchema')
+const { type } = require('os')
 
 
 const adminkey = process.env.ADMINKEY
@@ -246,49 +248,49 @@ app.post('/signup', async (req, res) => {
       req.flash('danger', 'An error occurred during signup. Please try again.');
       return res.redirect('/signup');
     }
+
+    async function registerUser(){
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password11,salt)
+        try{
+            const user = new userschema({
+                firstName: details.firstName,
+                username: username.trim(),
+                lastName: details.lastName,
+                email: details.email,
+                encryptedpassword: hashedPassword,
+                password: password11,
+                country: details.country,
+                number: details.number,
+                date: date,
+                referrer: details.referrer
+            })
+            await user.save()
+  
+            const balance = new balanceSchema({
+                username: username.trim(),
+                email: details.email,
+                name: details.firstName + ' ' + details.lastName,
+                balance: 0.00,
+                deposit: 0.00,
+                withdrawal: 0.00,
+                bonus: 0.00,
+                profit:0.00,
+                bot: false
+            })
+            await balance.save()
+  
+          //   console.log(user)
+            req.flash('success', 'Sign Up Successfully, Verification Link Sent To Your Email!')
+            res.redirect('/signup')
+            verifyemail(email)
+            newuser(email)
+        }catch(err){
+            console.log(err)
+        }
+    }
   });
   
-
-  async function registerUser(){
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(password11,salt)
-      try{
-          const user = new userschema({
-              firstName: details.firstName,
-              username: username.trim(),
-              lastName: details.lastName,
-              email: details.email,
-              encryptedpassword: hashedPassword,
-              password: password11,
-              country: details.country,
-              number: details.number,
-              date: date,
-              referrer: details.referrer
-          })
-          await user.save()
-
-          const balance = new balanceSchema({
-              username: username.trim(),
-              email: details.email,
-              name: details.firstName + ' ' + details.lastName,
-              balance: 0.00,
-              deposit: 0.00,
-              withdrawal: 0.00,
-              bonus: 0.00,
-              profit:0.00,
-              bot: false
-          })
-          await balance.save()
-
-        //   console.log(user)
-          req.flash('success', 'Sign Up Successfully, Verification Link Sent To Your Email!')
-          res.redirect('/signup')
-          verifyemail(email)
-          newuser(email)
-      }catch(err){
-          console.log(err)
-      }
-  }
 
 app.post('/login', async (req,res)=>{
   const loginInfo = req.body
@@ -485,6 +487,151 @@ app.get('/dashboard/trading', protectRoute, async (req,res)=>{
 } catch(err){
     console.log(err)
 }
+})
+
+
+
+app.post('/trade/open/:id', async (req,res)=>{
+    try{
+        const { logintoken } = req.cookies; // Extract the logintoken cookie
+
+        if (!logintoken) {
+            return res.status(401).json({ error: 'Unauthorized: Token is missing' });
+        } 
+
+        const user = jwt.verify(logintoken, secretkey)
+        req.user = user
+        const auser = req.user.user.email
+        const {amount, price, symbol, leverage} = req.body
+
+        const tradeType = req.params.id
+        // console.log(amount, price, symbol, leverage)
+        // console.log(auser)
+        const formattedPrice = parseFloat(price.replace('$', ''))
+        // console.log(formattedPrice)
+        const currentDate = new Date();
+        const formattedDateTime = currentDate.toLocaleString();
+
+        const userbalance = await balanceSchema.findOne({auser})
+        const balance = userbalance.balance
+
+        if (Number.isNaN(variable)) {
+            return res.status(401).json({ error: 'Not a number' });
+        }
+
+        if(amount > balance){
+            return res.status(401).json({ error: 'Insuccifient balance' });
+        }
+
+        const newBalance = balance - amount
+        // console.log(newBalance)
+
+        balanceSchema.findOneAndUpdate({auser}, {$set: {balance: newBalance, }}, {new: true}, (err,dets)=>{
+            if (err){
+                console.log(err)
+                return
+            }})
+
+        const trade = new tradeSchema({
+            email: auser,
+            status: 'pending',
+            type: tradeType,
+            symbol: symbol,
+            entryPrice: formattedPrice,
+            amount: amount,
+            leverage: leverage,
+            pnl: 0,
+            date: formattedDateTime
+        })
+        await trade.save()
+        console.log(trade)
+        req.flash('success', `${tradeType.toLocaleUpperCase()} Order on ${symbol} Placed Successfully`)
+        res.redirect('/dashboard/trading')
+    } catch(err){
+        console.log(err)
+        req.flash('danger', 'An Error Ocurred, Please try again')
+        res.redirect('/dashboard/trading')
+    }
+})
+
+async function getCurrentPrice(cryptoId) {
+    try {
+        const response = await axios.get(
+          `https://api.binance.com/api/v3/ticker/price?symbol=${cryptoId.toUpperCase()}`
+        );
+        const formattedPrice = parseFloat(response.data.price).toFixed(3)
+        return formattedPrice
+      } catch (error) {
+        console.log(error)
+      }
+}
+
+app.patch('/api/closeTrade/:id', async (req, res) => {
+    try {
+        const { id } = req.params;  // Get the trade ID from the URL parameters
+    
+        // Find the trade by ID
+        const trade = await tradeSchema.findById(id);
+        if (!trade) {
+          return res.status(404).json({ message: 'Trade not found' });
+        }
+    
+        // Get the current price of the trade's symbol (e.g., BTC, ETH)
+        const currentPrice = await getCurrentPrice(trade.symbol);
+        if (!currentPrice) {
+          return res.status(500).json({ message: 'Failed to get current price' });
+        }
+    
+        const entryPrice = parseFloat(trade.entryPrice);
+        const amount = parseFloat(trade.amount);
+        const leverage = parseFloat(trade.leverage);
+        let pnl
+        if (trade.type === 'buy'){
+             pnl = (currentPrice - entryPrice) * (amount/ entryPrice) * leverage;
+        } else {
+            pnl = (entryPrice - currentPrice) * (amount/ entryPrice) * leverage;
+        }
+    
+        // Find the user associated with the trade
+        const user = await balanceSchema.findOne({ email: trade.email });
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+    
+        // Calculate the amount to add back to the user's balance (amount + pnl)
+        const amountToAdd = amount + pnl;
+    
+        // Update the user's balance
+        user.balance = user.balance + amountToAdd;
+        await user.save();
+    
+        // Update the trade's PNL and status to 'closed'
+        trade.pnl = pnl;
+        trade.status = 'closed';
+        await trade.save();
+    
+        // Respond with success
+        res.status(200).json({
+          message: 'Trade closed successfully and balance updated',
+          userBalance: user.balance,
+          trade: trade
+        });
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error closing trade and updating balance' });
+      }
+    });    
+  
+
+app.get('/api/trades/:id', async (req,res)=>{
+   try{
+    const user = req.params.id
+    const trades = await tradeSchema.find({ user, status: 'pending' })
+    res.json(trades)
+   } catch (error){
+    console.log(error)
+   }
 })
 
 app.get("/api/price/:cryptoId", async (req, res) => {
@@ -829,6 +976,7 @@ app.post('/kyc-reject/:id', async (req,res)=>{
         }
     })
 })
+
 app.post('/kyc-accept/:id', async (req,res)=>{
     const id = req.params.id
     const user = await userSchema.findById(id)
